@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run --config ./src/test/vitest.unit.config.ts",
-    "unitTest": "vitest --config ./src/test/vitest.unit.config.ts",
-    "integrationTest": "vitest --config ./src/test/vitest.integration.config.ts",
+    "unitTest": "vitest run --config ./src/test/vitest.unit.config.ts",
+    "integrationTest": "vitest run --config ./src/test/vitest.integration.config.ts",
     "lint": "npx eslint ."
   },
   "repository": {

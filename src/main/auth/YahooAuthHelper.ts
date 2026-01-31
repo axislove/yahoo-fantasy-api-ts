@@ -26,6 +26,12 @@ export class YahooAuthHelper {
         }
     }
 
+    // return YahooFantasyClient with new access token
+    async authenticatedClient(): Promise<YahooFantasyClient> {
+        const token: TokenResponse = await this.getToken();
+        return new YahooFantasyClient(token.access_token);
+    }
+
     private async getToken(): Promise<TokenResponse> {
         const base64EncodedAuth = Buffer
             .from(this.clientId + ":" + this.clientSecret)
@@ -49,11 +55,5 @@ export class YahooAuthHelper {
         }
 
         return TokenSchema.parse(response.data);
-    }
-
-    // return YahooFantasyClient with new access token
-    async authenticatedClient(): Promise<YahooFantasyClient> {
-        const token: TokenResponse = await this.getToken();
-        return new YahooFantasyClient(token.access_token);
     }
 }

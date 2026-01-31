@@ -23,7 +23,7 @@ test('initialize YahooAuthHelper - no axios client', () => {
     expect(yahooAuthHelper).not.toBeNull();
 });
 
-test('axios error', async () => {
+test('authenticated client - axios error', async () => {
     const encodedAuth = Buffer.from(clientId + ":" + clientSecret).toString("base64");
     const expectedRequestData = {
         client_id: clientId,
