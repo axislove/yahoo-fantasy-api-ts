@@ -3,21 +3,24 @@ import { YahooFantasyClient } from "../YahooFantasyClient";
 import { TokenResponse, TokenSchema } from "./schema/TokenSchema";
 
 export class YahooAuthHelper {
-    private readonly client_id: string;
-    private readonly client_secret: string;
-    private readonly refresh_token: string;
+    private static readonly BASE_URL: string = "https://api.login.yahoo.com/oauth2";
+    private static readonly TOKEN_PATH: string = "/get_token";
+
+    private readonly clientId: string;
+    private readonly clientSecret: string;
+    private readonly refreshToken: string;
     private readonly client: AxiosInstance;
 
-    constructor(client_id: string, client_secret: string, refresh_token: string, client?: AxiosInstance) {
-        this.client_id = client_id;
-        this.client_secret = client_secret;
-        this.refresh_token = refresh_token;
+    constructor(clientId: string, clientSecret: string, refreshToken: string, client?: AxiosInstance) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.refreshToken = refreshToken;
 
         if (client) {
             this.client = client;
         } else {
             this.client = axios.create({
-                baseURL: "https://api.login.yahoo.com/oauth2",
+                baseURL: YahooAuthHelper.BASE_URL,
                 timeout: 5000
             });
         }
@@ -25,13 +28,13 @@ export class YahooAuthHelper {
 
     private async getToken(): Promise<TokenResponse> {
         const base64EncodedAuth = Buffer
-            .from(this.client_id + ":" + this.client_secret)
+            .from(this.clientId + ":" + this.clientSecret)
             .toString("base64");
 
-        const response: AxiosResponse = await this.client.post('/get_token', {
-            client_id: this.client_id,
-            client_secret: this.client_secret,
-            refresh_token: this.refresh_token,
+        const response: AxiosResponse = await this.client.post(YahooAuthHelper.TOKEN_PATH, {
+            client_id: this.clientId,
+            client_secret: this.clientSecret,
+            refresh_token: this.refreshToken,
             redirect_uri: "oob",
             grant_type: "refresh_token"
         }, {

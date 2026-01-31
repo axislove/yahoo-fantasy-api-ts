@@ -7,28 +7,28 @@ import { YahooFantasyClient } from '../../main/YahooFantasyClient';
 let authHelper: YahooAuthHelper;
 let mockAxiosClient: AxiosInstance;
 
-const client_id = "client_id";
-const client_secret = "client_secret";
-const refresh_token = "refresh_token"
+const clientId = "client_id";
+const clientSecret = "client_secret";
+const refreshToken = "refresh_token"
 
 beforeEach(() => {
     mockAxiosClient = mock<AxiosInstance>();
 
-    authHelper = new YahooAuthHelper(client_id, client_secret, refresh_token, instance(mockAxiosClient));
+    authHelper = new YahooAuthHelper(clientId, clientSecret, refreshToken, instance(mockAxiosClient));
 });
 
 test('initialize YahooAuthHelper - no axios client', () => {
-    const yahooAuthHelper = new YahooAuthHelper(client_id, client_secret, refresh_token);
+    const yahooAuthHelper = new YahooAuthHelper(clientId, clientSecret, refreshToken);
 
     expect(yahooAuthHelper).not.toBeNull();
 });
 
 test('axios error', async () => {
-    const encodedAuth = Buffer.from(client_id + ":" + client_secret).toString("base64");
+    const encodedAuth = Buffer.from(clientId + ":" + clientSecret).toString("base64");
     const expectedRequestData = {
-        client_id: client_id,
-        client_secret: client_secret,
-        refresh_token: refresh_token,
+        client_id: clientId,
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
         redirect_uri: "oob",
         grant_type: "refresh_token"
     }
@@ -65,11 +65,11 @@ test('axios error', async () => {
 
 
 test('authenticated client', async () => {
-    const encodedAuth = Buffer.from(client_id + ":" + client_secret).toString("base64");
+    const encodedAuth = Buffer.from(clientId + ":" + clientSecret).toString("base64");
     const expectedRequestData = {
-        client_id: client_id,
-        client_secret: client_secret,
-        refresh_token: refresh_token,
+        client_id: clientId,
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
         redirect_uri: "oob",
         grant_type: "refresh_token"
     }
