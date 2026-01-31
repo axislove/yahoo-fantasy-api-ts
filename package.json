@@ -1,6 +1,6 @@
 {
   "name": "yahoo-fantasy-typescript",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Yahoo Fantasy API for Typescript",
   "main": "index.js",
   "scripts": {
