@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "vitest run --config ./src/test/vitest.unit.config.ts",
     "unitTest": "vitest run --config ./src/test/vitest.unit.config.ts",
-    "integrationTest": "vitest run --config ./src/test/vitest.integration.config.ts",
     "lint": "npx eslint ."
   },
   "repository": {
@@ -32,6 +30,7 @@
     "xml2js": "^0.6.2"
   },
   "dependencies": {
+    "handlebars": "^4.7.8",
     "test": "^3.3.0",
     "zod": "^4.1.12"
   }

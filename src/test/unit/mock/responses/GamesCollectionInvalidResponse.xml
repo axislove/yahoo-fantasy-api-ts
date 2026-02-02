@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" yahoo:uri="http://fantasysports.yahooapis.com/fantasy/v2/games;is_available=1" time="68.49217414856ms" copyright="Certain Data by Sportradar, Stats Perform and Rotowire" refresh_rate="60" xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" xmlns="http://fantasysports.yahooapis.com/fantasy/v2/base.rng">
+    <games count="7">
+        <game>
+            <game_key>461</game_key>
+            <game_id>461</game_id>
+            <name>Football</name>
+            <code>nfl</code>
+            <!-- <type>full</type> -->
+            <url>https://football.fantasysports.yahoo.com/f1</url>
+            <season>2025</season>
+            <is_registration_over>1</is_registration_over>
+            <is_game_over>1</is_game_over>
+            <!-- <is_offseason>0</is_offseason> -->
+        </game>
+        <game>
+            <game_key>462</game_key>
+            <game_id>462</game_id>
+            <name>Pro Football Pick'em</name>
+            <code>nflp</code>
+            <type>pickem-group</type>
+            <!-- <url>https://football.fantasysports.yahoo.com/pickem</url> -->
+            <season>2025</season>
+            <is_registration_over>0</is_registration_over>
+            <is_game_over>0</is_game_over>
+            <is_offseason>0</is_offseason>
+            <current_week>22</current_week>
+        </game>
+        <game>
+            <game_key>463</game_key>
+            <game_id>463</game_id>
+            <name>College Football Pick'em</name>
+            <code>ncaaf</code>
+            <type>pickem-group</type>
+            <url>https://football.fantasysports.yahoo.com/college</url>
+            <season>2025</season>
+            <is_registration_over>1</is_registration_over>
+            <is_game_over>1</is_game_over>
+            <is_offseason>1</is_offseason>
+            <current_week>15</current_week>
+        </game>
+        <game>
+            <game_key>464</game_key>
+            <game_id>464</game_id>
+            <name>Survival Football</name>
+            <code>nfls</code>
+            <type>pickem-group</type>
+            <url>https://football.fantasysports.yahoo.com/survival</url>
+            <season>2025</season>
+            <is_registration_over>0</is_registration_over>
+            <is_game_over>0</is_game_over>
+            <is_offseason>0</is_offseason>
+            <current_week>22</current_week>
+            <is_contest_reg_active>0</is_contest_reg_active>
+            <is_contest_over>1</is_contest_over>
+            <has_schedule>1</has_schedule>
+        </game>
+        <game>
+            <game_key>466</game_key>
+            <game_id>466</game_id>
+            <name>Basketball</name>
+            <code>nba</code>
+            <type>full</type>
+            <url>https://basketball.fantasysports.yahoo.com/nba</url>
+            <season>2025</season>
+            <is_registration_over>0</is_registration_over>
+            <is_game_over>0</is_game_over>
+            <is_offseason>0</is_offseason>
+        </game>
+        <game>
+            <game_key>465</game_key>
+            <game_id>465</game_id>
+            <name>Hockey</name>
+            <code>nhl</code>
+            <type>full</type>
+            <url>https://hockey.fantasysports.yahoo.com/hockey</url>
+            <season>2025</season>
+            <is_registration_over>0</is_registration_over>
+            <is_game_over>0</is_game_over>
+            <is_offseason>0</is_offseason>
+        </game>
+        <game>
+            <game_key>469</game_key>
+            <game_id>469</game_id>
+            <name>Baseball</name>
+            <code>mlb</code>
+            <type>full</type>
+            <url>https://baseball.fantasysports.yahoo.com/b1</url>
+            <season>2026</season>
+            <is_registration_over>0</is_registration_over>
+            <is_game_over>0</is_game_over>
+            <is_offseason>0</is_offseason>
+            <alternate_start_deadline>2025-03-26</alternate_start_deadline>
+        </game>
+    </games>
+</fantasy_content>
+<!-- fantasy-sports-api- -public-production-bf1-56bd4d857c-8ncmn Mon Feb  2 19:29:24 UTC 2026 -->
