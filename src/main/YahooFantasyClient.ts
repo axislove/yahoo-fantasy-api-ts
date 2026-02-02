@@ -28,7 +28,7 @@ export class YahooFantasyClient {
         return GameResourceBuilder.create(this.executor);
     }
 
-    games() {
+    games(): GamesCollectionBuilder {
         return GamesCollectionBuilder.create(this.executor);
     }
 }

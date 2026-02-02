@@ -14,10 +14,23 @@ npm install
 ````
 
 ## API Design
-TBD
+A fluent / pseudo-fluent based API for consuming Yahoo's fantasy data. To begin, a client must create a `YahooFantasyClient` instance.
+
+Basic usage:
+````javascript
+const client: YahooFantasyClient = new YahooFantasyClient("my-access-token");
+
+// get game resource
+const gameResponse: GameResponse = client.game().withGameId("461").get();
+
+// get games collection
+const gamesResponse: GamesResponse = client.games().withGameKey("461").get();
+````
 
 ## Tests & Linting
-TBD
+````javascript
+npm run unitTest
+```
 
 ## License
 MIT License
