@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { GameResourceBuilder, PermitGameKey } from "./resource/GameResourceBuilder";
 import { RequestExecutor } from "./RequestExecutor";
 import { GamesCollectionBuilder } from "./collection/GamesCollectionBuilder";
+import { TeamResourceBuilder } from "./resource/TeamResourceBuilder";
 
 export class YahooFantasyClient {
     private static readonly BASE_URL: string = "https://fantasysports.yahooapis.com/fantasy/v2/";
@@ -20,7 +21,8 @@ export class YahooFantasyClient {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
-                }));
+                })
+            );
         }
     }
 
@@ -30,5 +32,9 @@ export class YahooFantasyClient {
 
     games(): GamesCollectionBuilder {
         return GamesCollectionBuilder.create(this.executor);
+    }
+
+    team() {
+        return TeamResourceBuilder.create(this.executor);
     }
 }
