@@ -1,8 +1,8 @@
 import { beforeEach, expect, test } from 'vitest';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
-import { YahooAuthHelper } from '../../main/auth/YahooAuthHelper';
-import { YahooFantasyClient } from '../../main/YahooFantasyClient';
+import { YahooAuthHelper } from '../../../main/auth/YahooAuthHelper';
+import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 
 let authHelper: YahooAuthHelper;
 let mockAxiosClient: AxiosInstance;
