@@ -3,6 +3,8 @@ import { PathBuilder } from "../PathBuilder";
 import { RequestExecutor } from "../RequestExecutor";
 import { GameCode } from "../enum/GameCode";
 import { GamesResponse, GamesResponseSchema } from "../schema/GameSchema";
+import { ExecutableResource } from "../ExecutableResource";
+import { ZodType } from "zod";
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#games-collection
@@ -10,7 +12,7 @@ import { GamesResponse, GamesResponseSchema } from "../schema/GameSchema";
  * Builder to return a collection of Games. A GamesCollection can have filters
  * added to a request to obtain a further subset, based on those filters.
  */
-export class GamesCollectionBuilder {
+export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
 
     // filters
     private readonly game_keys: string[] = [];
@@ -18,17 +20,13 @@ export class GamesCollectionBuilder {
     private readonly game_types: string[] = [];
     private readonly _seasons: string[] = [];
     private _available = false;
-    
-    private readonly executor: RequestExecutor;
-    private readonly pathBuilder: PathBuilder;
 
-    private constructor(executor: RequestExecutor, pathBuilder: PathBuilder) {
-        this.executor = executor;
-        this.pathBuilder = pathBuilder;
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
     }
 
     static create(executor: RequestExecutor): GamesCollectionBuilder {
-        return new GamesCollectionBuilder(executor, new PathBuilder('/games'));
+        return new GamesCollectionBuilder(GamesResponseSchema, executor, new PathBuilder('/games'));
     }
 
     withGameKey(gameKey: string) {

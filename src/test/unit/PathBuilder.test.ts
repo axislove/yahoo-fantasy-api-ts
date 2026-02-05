@@ -8,10 +8,10 @@ beforeEach(() => {
 });
 
 test('pathBuilder - with parameter', () => {
-    pathBuilder.withParam("foo");
+    pathBuilder.withParam("foo", "bar");
 
     const path = pathBuilder.buildPath();
-    expect(path).to.eql('/beginningfoo');
+    expect(path).to.eql('/beginning;foo=bar');
 });
 
 test('pathBuilder - with parameter map', () => {

@@ -1,10 +1,11 @@
 import { beforeEach, expect, test } from 'vitest';
-import { GameCode } from '../../../main/enum/GameCode';
 import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
-import { GameResponse } from '../../../main/schema/GameSchema';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { instance, mock, verify, when } from 'ts-mockito';
+import { TeamResponse, TeamStatsResponse } from '../../../main/schema/TeamSchema';
 import { getMockResponse } from '../UnitTestUtil';
+
+const teamKey = 'teamKey1';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
@@ -15,8 +16,8 @@ beforeEach(() => {
     yahooClient = new YahooFantasyClient("accessToken", instance(mockedAxiosClient));
 })
 
-test('game with game_code', async () => {
-    const xmlContent = await getMockResponse('GameResourceResponse.xml');
+test('team', async () => {
+    const xmlContent = await getMockResponse('TeamResourceResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -25,20 +26,18 @@ test('game with game_code', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const gameCode = GameCode.NFL;
-    const endpoint = `/game/${gameCode}`
+    const endpoint = `/team/${teamKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response = await yahooClient.game().withGameCode(gameCode).get();
+    const response: TeamResponse = await yahooClient.team().teamKey(teamKey).get();
     
     expect(response).not.toBeNull();
-    expect(response.game.code).toEqual(gameCode);
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
 
-test('game with game_code, invalid schema', async () => {
-    const xmlContent = await getMockResponse('GameResourceInvalidResponse.xml');
+test('team, invalid schema', async () => {
+    const xmlContent = await getMockResponse('TeamResourceInvalidResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -47,16 +46,16 @@ test('game with game_code, invalid schema', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const gameCode = GameCode.NFL;
-    const endpoint = `/game/${gameCode}`
+    const endpoint = `/team/${teamKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-    await expect(yahooClient.game().withGameCode(gameCode).get()).rejects.toThrowError('ZodError occurred');
+    
+    await expect(yahooClient.team().teamKey(teamKey).get()).rejects.toThrowError('ZodError occurred')
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
 
-test('game with game_id', async () => {
-    const xmlContent = await getMockResponse('GameResourceResponse.xml');
+test('team matchups', async () => {
+    const xmlContent = await getMockResponse('TeamMatchupsResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -65,20 +64,18 @@ test('game with game_id', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const gameId = '461';
-    const endpoint = `/game/${gameId}`
+    const endpoint = `/team/${teamKey}/matchups`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: GameResponse = await yahooClient.game().withGameId(gameId).get();
+    const response: TeamResponse = await yahooClient.team().teamKey(teamKey).matchups().get();
     
     expect(response).not.toBeNull();
-    expect(response.game.game_id).toEqual(gameId);
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
 
-test('game with game_id, invalid schema', async () => {
-    const xmlContent = await getMockResponse('GameResourceInvalidResponse.xml');
+test('team stats', async () => {
+    const xmlContent = await getMockResponse('TeamStatsResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -87,10 +84,12 @@ test('game with game_id, invalid schema', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const gameId = '461';
-    const endpoint = `/game/${gameId}`
+    const endpoint = `/team/${teamKey}/stats`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-    await expect(yahooClient.game().withGameId(gameId).get()).rejects.toThrowError('ZodError occurred');
+
+    const response: TeamStatsResponse = await yahooClient.team().teamKey(teamKey).stats().get();
+    
+    expect(response).not.toBeNull();
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });

@@ -1,8 +1,9 @@
 import { GameResponse, GameResponseSchema } from "../schema/GameSchema";
 import { RequestExecutor } from "../RequestExecutor";
 import { GameCode } from "../enum/GameCode";
-import { PermitGet } from "../PermitGet";
 import { PathBuilder } from "../PathBuilder";
+import { ExecutableResource } from "../ExecutableResource";
+import { ZodType } from "zod";
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#game-resource
@@ -14,25 +15,22 @@ import { PathBuilder } from "../PathBuilder";
  * 
  * More information available on Yahoo's documentation
  */
-export class GameResourceBuilder implements PermitGameKey, PermitGet<GameResponse> {
-    private readonly executor: RequestExecutor;
-    private readonly pathBuilder: PathBuilder;
+export class GameResourceBuilder extends ExecutableResource<GameResponse> implements PermitGameKey {
 
-    private constructor(executor: RequestExecutor, pathBuilder: PathBuilder) {
-        this.executor = executor;
-        this.pathBuilder = pathBuilder;
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
     }
 
     static create(executor: RequestExecutor): PermitGameKey {
-        return new GameResourceBuilder(executor, new PathBuilder('/game'));
+        return new GameResourceBuilder(GameResponseSchema, executor, new PathBuilder('/game'));
     }
 
-    withGameCode(gameCode: GameCode): PermitGet<GameResponse> {
+    withGameCode(gameCode: GameCode): ExecutableResource<GameResponse> {
         this.pathBuilder.withResource(gameCode);
         return this;
     }
 
-    withGameId(gameId: string): PermitGet<GameResponse> {
+    withGameId(gameId: string): ExecutableResource<GameResponse> {
         this.pathBuilder.withResource(gameId);
         return this;
     }
@@ -43,6 +41,6 @@ export class GameResourceBuilder implements PermitGameKey, PermitGet<GameRespons
 }
 
 export interface PermitGameKey {
-    withGameCode(gameCode: GameCode): PermitGet<GameResponse>;
-    withGameId(gameId: string): PermitGet<GameResponse>;
+    withGameCode(gameCode: GameCode): ExecutableResource<GameResponse>;
+    withGameId(gameId: string): ExecutableResource<GameResponse>;
 }

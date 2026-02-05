@@ -5,13 +5,13 @@ export class PathBuilder {
         this.path = path;
     }
 
-    withParam(s: string): void {
-        this.path += s;
-    }
-
     // append / and provided resource
     withResource(r: string): void {
         this.path += `/${r}`;
+    }
+
+    withParam(key: string, value: string): void {
+        this.path += `;${key}=${value}`;
     }
 
     withParams(params: Map<string, string[]>): void {

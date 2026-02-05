@@ -1,3 +1,3 @@
-export interface PermitGet<T> {
-    get(): Promise<T>;
+export interface PermitGet {
+    get<R>(): Promise<R>;
 }
