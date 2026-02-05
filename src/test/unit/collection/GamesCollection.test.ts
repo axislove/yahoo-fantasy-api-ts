@@ -2,10 +2,10 @@ import { beforeEach, test, expect } from 'vitest';
 import { instance, mock, verify, when } from 'ts-mockito';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
-import { UnitTestUtil } from '../UnitTestUtil';
 import { GamesResponse } from '../../../main/schema/GameSchema';
 import { GameCode } from '../../../main/enum/GameCode';
 import { GameType } from '../../../main/enum/GameType';
+import { getMockResponse } from '../UnitTestUtil';
 
 const gameKey1 = 'gameKey1';
 const gameKey2 = 'gameKey2'
@@ -29,7 +29,7 @@ beforeEach(() => {
 });
 
 test('games, invalid schema', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionInvalidResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionInvalidResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -47,7 +47,7 @@ test('games, invalid schema', async () => {
 });
 
 test('games, with game_key', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -67,7 +67,7 @@ test('games, with game_key', async () => {
 });
 
 test('games, with game_keys', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -87,7 +87,7 @@ test('games, with game_keys', async () => {
 });
 
 test('games, with game_code', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -106,7 +106,7 @@ test('games, with game_code', async () => {
 });
 
 test('games, with game_codes', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -126,7 +126,7 @@ test('games, with game_codes', async () => {
 });
 
 test('games, with game_type', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -146,7 +146,7 @@ test('games, with game_type', async () => {
 });
 
 test('games, with game_types', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -166,7 +166,7 @@ test('games, with game_types', async () => {
 });
 
 test('games, with season', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -186,7 +186,7 @@ test('games, with season', async () => {
 });
 
 test('games, with seasons', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -206,7 +206,7 @@ test('games, with seasons', async () => {
 });
 
 test('games, available', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,
@@ -226,7 +226,7 @@ test('games, available', async () => {
 });
 
 test('games, many parameters', async () => {
-    const xmlContent = await UnitTestUtil.getMockResponse('GamesCollectionResponse.xml');
+    const xmlContent = await getMockResponse('GamesCollectionResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
         status: 200,

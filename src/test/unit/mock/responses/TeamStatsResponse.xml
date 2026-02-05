@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" yahoo:uri="http://fantasysports.yahooapis.com/fantasy/v2/team/000.l.000000.t.1/stats" time="78.242063522339ms" copyright="Certain Data by Sportradar, Stats Perform and Rotowire" refresh_rate="60" xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" xmlns="http://fantasysports.yahooapis.com/fantasy/v2/base.rng">
+    <team>
+        <team_key>000.l.0000.t.1</team_key>
+        <team_id>1</team_id>
+        <name>My Team</name>
+        <is_owned_by_current_login>1</is_owned_by_current_login>
+        <url>https://football.fantasysports.yahoo.com/</url>
+        <team_logos>
+            <team_logo>
+                <size>large</size>2
+                <url>https://yahoofantasysports-res.cloudinary.com/image/</url>
+            </team_logo>
+        </team_logos>
+        <previous_season_team_rank>14</previous_season_team_rank>
+        <waiver_priority>14</waiver_priority>
+        <number_of_moves>33</number_of_moves>
+        <number_of_trades>0</number_of_trades>
+        <roster_adds>
+            <coverage_type>week</coverage_type>
+            <coverage_value>18</coverage_value>
+            <value>0</value>
+        </roster_adds>
+        <clinched_playoffs>1</clinched_playoffs>
+        <league_scoring_type>head</league_scoring_type>
+        <has_draft_grade>1</has_draft_grade>
+        <draft_grade>B-</draft_grade>
+        <draft_recap_url>https://football.fantasysports.yahoo.com/</draft_recap_url>
+        <managers>
+            <manager>
+                <manager_id>1</manager_id>
+                <nickname>Nickname</nickname>
+                <guid>ABABABABABAB</guid>
+                <is_commissioner>1</is_commissioner>
+                <is_current_login>1</is_current_login>
+                <image_url>https://s.yimg.com/</image_url>
+                <felo_score>707</felo_score>
+                <felo_tier>gold</felo_tier>
+            </manager>
+        </managers>
+        <team_points>
+            <coverage_type>season</coverage_type>
+            <season>2024</season>
+            <total>1506.68</total>
+        </team_points>
+    </team>
+</fantasy_content>
+<!-- fantasy-sports-api- -public-production-bf1-55fb8965fd-m6gvt Wed Feb  4 23:13:07 UTC 2026 -->

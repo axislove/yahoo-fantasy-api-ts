@@ -33,7 +33,8 @@ export const TeamSchema = z.strictObject({
     })
 });
 
-export const TeamExtendedInfoSchema = TeamSchema.extend({
+export const TeamExtendedInfoSchema = z.object({
+    ...TeamSchema.shape,
     win_probability: z.string(),
     team_points: z.object({
         coverage_type: z.string(),
@@ -46,6 +47,21 @@ export const TeamExtendedInfoSchema = TeamSchema.extend({
         total: z.string()
     })
 });
+
+const TeamStatsSchema = z.object({
+    ...TeamSchema.shape,
+    team_points: z.object({
+        coverage_type: z.string(),
+        season: z.string(),
+        total: z.string()
+    })
+});
+
+export const TeamStatsResponseSchema = YahooFantasyContentBaseSchema.extend({
+    team: TeamStatsSchema
+});
+
+export type TeamStatsResponse = z.infer<typeof TeamStatsResponseSchema>;
 
 export const TeamResponseSchema = YahooFantasyContentBaseSchema.extend({
     team: TeamSchema
