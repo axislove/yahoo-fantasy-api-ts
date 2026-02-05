@@ -29,12 +29,6 @@ export class TeamResourceBuilder extends ExecutableResource<TeamResponse> implem
         this.pathBuilder.withResource('stats');
         return StatsSubResource.create(this.executor, this.pathBuilder);
     }
-
-    async get(): Promise<TeamResponse> {
-        return await this.executor
-            .makeGetRequest(this.pathBuilder.buildPath(), TeamResponseSchema);
-    }
-
 }
 
 class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {

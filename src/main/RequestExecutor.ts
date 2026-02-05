@@ -18,7 +18,6 @@ export class RequestExecutor {
         console.log("Making request to: " + path);
         try {
             const response = await this.client.get(path);
-            console.log(response.data);
             if (response.status != HttpStatusCode.Ok.valueOf()) {
 
                 // TODO: api errors
@@ -32,7 +31,6 @@ export class RequestExecutor {
         } catch (error: any) {
             console.error(`Error making GET to endpoint: ${path}`);
             if (error instanceof ZodError) {
-                console.log(error);
                 throw new Error("ZodError occurred");
             }
             
