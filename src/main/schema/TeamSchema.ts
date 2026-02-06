@@ -1,6 +1,7 @@
 import z from "zod";
 import { ManagerSchema } from "./ManagerSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { PlayerSchema } from "./PlayerSchema";
 
 export const TeamSchema = z.strictObject({
     team_key: z.string(),
@@ -33,6 +34,12 @@ export const TeamSchema = z.strictObject({
     })
 });
 
+const TeamProjectedPointsSchema = z.object({
+    coverage_type: z.string(),
+    week: z.string(),
+    total: z.string()
+});
+
 export const TeamExtendedInfoSchema = z.object({
     ...TeamSchema.shape,
     win_probability: z.string(),
@@ -52,10 +59,32 @@ const TeamStatsSchema = z.object({
     ...TeamSchema.shape,
     team_points: z.object({
         coverage_type: z.string(),
-        season: z.string(),
+        season: z.string().optional(),
+        week: z.string().optional(),
         total: z.string()
+    }),
+    team_projected_points: TeamProjectedPointsSchema.optional()
+});
+
+export const TeamRosterSchema = z.strictObject({
+    ...TeamSchema.shape,
+    roster: z.strictObject({
+        coverage_type: z.string(),
+        week: z.string(),
+        is_prescoring: z.string(),
+        is_editable: z.string(),
+        players: z.object({
+            count: z.string(),
+            player: z.array(PlayerSchema)
+        })
     })
 });
+
+export const TeamRosterResponseSchema = YahooFantasyContentBaseSchema.extend({
+    team: TeamRosterSchema
+});
+
+export type TeamRosterResponse = z.infer<typeof TeamRosterResponseSchema>;
 
 export const TeamStatsResponseSchema = YahooFantasyContentBaseSchema.extend({
     team: TeamStatsSchema

@@ -2,7 +2,7 @@ import { ZodType } from "zod";
 import { PathBuilder } from "../PathBuilder";
 import { RequestExecutor } from "../RequestExecutor";
 import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from "../schema/TeamMatchupsSchema";
-import { TeamResponse, TeamResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from "../schema/TeamSchema";
+import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from "../schema/TeamSchema";
 import { ExecutableResource } from "../ExecutableResource";
 
 export class TeamResourceBuilder extends ExecutableResource<TeamResponse> implements PermitTeamKey, PermitMatchupsOrStatsOrGet<TeamResponse> {
@@ -23,6 +23,11 @@ export class TeamResourceBuilder extends ExecutableResource<TeamResponse> implem
     matchups(): MatchupsSubResource {
         this.pathBuilder.withResource('matchups');
         return MatchupsSubResource.create(this.executor, this.pathBuilder);
+    }
+
+    roster(): RosterSubResource {
+        this.pathBuilder.withResource('roster');
+        return RosterSubResource.create(this.executor, this.pathBuilder);
     }
 
     stats(): StatsSubResource {
@@ -66,6 +71,24 @@ class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
     }
 }
 
+// TODO: add 'date filter for non-nfl games
+class RosterSubResource extends ExecutableResource<TeamRosterResponse> {
+
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create(executor: RequestExecutor, pathBuilder: PathBuilder) {
+        return new RosterSubResource(TeamRosterResponseSchema, executor, pathBuilder);
+    }
+
+    week(week: number): ExecutableResource<TeamRosterResponse> {
+        this.pathBuilder.withParam('week', week.toString());
+        return this;
+    }
+}
+
+// TODO: add 'date' filter for non-nfl games
 class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
@@ -81,9 +104,9 @@ class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
         return this;
     }
 
-    date(date: Date): ExecutableResource<TeamStatsResponse> {
-        this.pathBuilder.withParam('type', 'date');
-        this.pathBuilder.withParam('date', date.toString());
+    week(week: number): ExecutableResource<TeamStatsResponse> {
+        this.pathBuilder.withParam('type', 'week');
+        this.pathBuilder.withParam('week', week.toString());
         return this;
     }
 }
@@ -94,6 +117,7 @@ export interface PermitTeamKey {
 
 interface PermitMatchupsOrStatsOrGet<T> {
     matchups(): MatchupsSubResource;
+    roster(): RosterSubResource;
     stats(): StatsSubResource;
     get(): Promise<T>;
 }

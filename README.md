@@ -20,11 +20,29 @@ Basic usage:
 ````javascript
 const client: YahooFantasyClient = new YahooFantasyClient("my-access-token");
 
-// get game resource
+/****** Game Resource******/
+
+// game
 const gameResponse: GameResponse = client.game().withGameId("461").get();
 
-// get games collection
+/****** Games Collection ******/
+
+// games
 const gamesResponse: GamesResponse = client.games().withGameKey("461").get();
+
+/****** Team Resource******/
+
+// team
+const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").get();
+
+// matchups
+const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").matchups().get();
+
+// roster
+const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").roster().get();
+
+// stats
+const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").stats().get();
 ````
 
 ## Tests & Linting

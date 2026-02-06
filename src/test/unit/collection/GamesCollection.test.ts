@@ -5,7 +5,7 @@ import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { GamesResponse } from '../../../main/schema/GameSchema';
 import { GameCode } from '../../../main/enum/GameCode';
 import { GameType } from '../../../main/enum/GameType';
-import { getMockResponse } from '../UnitTestUtil';
+import { getMockResponse } from '../TestUtils';
 
 const gameKey1 = 'gameKey1';
 const gameKey2 = 'gameKey2'

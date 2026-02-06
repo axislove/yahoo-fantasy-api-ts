@@ -4,7 +4,7 @@ import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { GameResponse } from '../../../main/schema/GameSchema';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { instance, mock, verify, when } from 'ts-mockito';
-import { getMockResponse } from '../UnitTestUtil';
+import { getMockResponse } from '../TestUtils';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
