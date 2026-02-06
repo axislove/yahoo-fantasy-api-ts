@@ -34,10 +34,6 @@ export class GameResourceBuilder extends ExecutableResource<GameResponse> implem
         this.pathBuilder.withResource(gameId);
         return this;
     }
-
-    async get(): Promise<GameResponse> {
-        return await this.executor.makeGetRequest(this.pathBuilder.buildPath(), GameResponseSchema);
-    }
 }
 
 export interface PermitGameKey {

@@ -43,6 +43,10 @@ const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").ros
 
 // stats
 const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").stats().get();
+
+/****** Team Resource******/
+
+const transaction: TransactionResponse = client.transaction().withKey("223.l.431.tr.26").get();
 ````
 
 ## Tests & Linting
