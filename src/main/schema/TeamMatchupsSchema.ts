@@ -3,7 +3,8 @@ import { TeamSchema } from "./TeamSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
 import { MatchupsSchema } from "./MatchupsSchema";
 
-export const TeamMatchupsSchema = TeamSchema.extend({
+export const TeamMatchupsSchema = z.strictObject({
+    ...TeamSchema.shape,
     matchups: MatchupsSchema
 });
 

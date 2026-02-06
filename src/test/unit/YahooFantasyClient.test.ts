@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 import { YahooFantasyClient } from '../../main/YahooFantasyClient';
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { instance, mock, verify, when } from 'ts-mockito';
-import { getMockResponse } from './UnitTestUtil';
+import { getMockResponse } from './TestUtils';
 
 test('YahooFantasyClient, only token', () => {
     const client: YahooFantasyClient = new YahooFantasyClient("accessToken");
