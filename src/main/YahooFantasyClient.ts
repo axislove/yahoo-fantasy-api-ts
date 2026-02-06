@@ -3,6 +3,7 @@ import { GameResourceBuilder, PermitGameKey } from "./resource/GameResourceBuild
 import { RequestExecutor } from "./RequestExecutor";
 import { GamesCollectionBuilder } from "./collection/GamesCollectionBuilder";
 import { TeamResourceBuilder } from "./resource/TeamResourceBuilder";
+import { TransactionResourceBuilder } from "./resource/TransactionResourceBuilder";
 
 export class YahooFantasyClient {
     private static readonly BASE_URL: string = "https://fantasysports.yahooapis.com/fantasy/v2/";
@@ -36,5 +37,9 @@ export class YahooFantasyClient {
 
     team() {
         return TeamResourceBuilder.create(this.executor);
+    }
+
+    transaction() {
+        return TransactionResourceBuilder.create(this.executor);
     }
 }

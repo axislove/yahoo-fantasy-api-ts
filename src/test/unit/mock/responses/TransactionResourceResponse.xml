@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" yahoo:uri="http://fantasysports.yahooapis.com/fantasy/v2/transaction/000.l.000000.tr.398" time="52.473783493042ms" copyright="Certain Data by Sportradar, Stats Perform and Rotowire" refresh_rate="60" xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" xmlns="http://fantasysports.yahooapis.com/fantasy/v2/base.rng">
+    <transaction>
+        <transaction_key>000.l.000000.tr.000</transaction_key>
+        <transaction_id>398</transaction_id>
+        <type>add/drop</type>
+        <status>successful</status>
+        <timestamp>1704045452</timestamp>
+        <players count="2">
+            <player>
+                <player_key>423.p.40051</player_key>
+                <player_id>40051</player_id>
+                <name>
+                    <full>Quentin Johnston</full>
+                    <first>Quentin</first>
+                    <last>Johnston</last>
+                    <ascii_first>Quentin</ascii_first>
+                    <ascii_last>Johnston</ascii_last>
+                </name>
+                <editorial_team_abbr>LAC</editorial_team_abbr>
+                <display_position>WR</display_position>
+                <position_type>O</position_type>
+                <transaction_data>
+                    <type>add</type>
+                    <source_type>freeagents</source_type>
+                    <destination_type>team</destination_type>
+                    <destination_team_key>000.l.000000.t.5</destination_team_key>
+                    <destination_team_name>My Teamt</destination_team_name>
+                </transaction_data>
+            </player>
+            <player>
+                <player_key>000.p.000000</player_key>
+                <player_id>31857</player_id>
+                <name>
+                    <full>Hollywood Brown</full>
+                    <first>Hollywood</first>
+                    <last>Brown</last>
+                    <ascii_first>Hollywood</ascii_first>
+                    <ascii_last>Brown</ascii_last>
+                </name>
+                <editorial_team_abbr>KC</editorial_team_abbr>
+                <display_position>WR</display_position>
+                <position_type>O</position_type>
+                <transaction_data>
+                    <type>drop</type>
+                    <source_type>team</source_type>
+                    <source_team_key>000.l.000000.t.5</source_team_key>
+                    <source_team_name>My Team</source_team_name>
+                    <destination_type>waivers</destination_type>
+                </transaction_data>
+            </player>
+        </players>
+    </transaction>
+</fantasy_content>
+<!-- fantasy-sports-api- -public-production-bf1-7c97fc9dfc-prwfl Fri Feb  6 05:52:56 UTC 2026 -->
