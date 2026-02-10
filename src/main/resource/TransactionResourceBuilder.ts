@@ -23,6 +23,6 @@ export class TransactionResourceBuilder extends ExecutableResource<TransactionRe
     }
 }
 
-interface PermitTransactionKey {
+export interface PermitTransactionKey {
     withKey(transactionKey: string): ExecutableResource<TransactionResponse>;
 }
