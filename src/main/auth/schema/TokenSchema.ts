@@ -1,6 +1,6 @@
-import z from 'zod';
+import { z } from "zod";
 
-export const TokenSchema = z.object({
+export const TokenSchema = z.strictObject({
     access_token: z.string(),
     refresh_token: z.string(),
     expires_in: z.number(),

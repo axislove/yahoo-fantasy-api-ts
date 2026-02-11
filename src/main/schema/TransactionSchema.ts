@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 import { PlayerBaseInfoSchema } from "./PlayerSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
 
@@ -23,7 +23,7 @@ export const TransactionSchema = z.strictObject({
     type: z.string(),
     status: z.string(),
     timestamp: z.string(),
-    players: z.object({
+    players: z.strictObject({
         count: z.string(),
         player: z.union([TransactionPlayerSchema, z.array(TransactionPlayerSchema)]),
     }),

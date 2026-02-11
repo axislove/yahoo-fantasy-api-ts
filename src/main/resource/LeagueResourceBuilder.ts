@@ -10,8 +10,6 @@ import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from "../schem
 import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from "../schema/ScoreboardSchema";
 import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from "../schema/DraftResultsSchema";
 import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from "../schema/LeagueTeamsSchema";
-import { LeaguePlayersResponse } from "../schema/LeaguePlayersSchema";
-import { PlayerStatus } from "../enum/PlayerStatus";
 
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
@@ -25,10 +23,6 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
     draftResults(): ExecutableResource<LeagueDraftResultsResponse> {
         return DraftResultsSubResource.create(this.executor, this.pathBuilder.withResource('draftresults'));
-    }
-
-    players() {
-        return PlayersSubResource.create(this.executor, this.pathBuilder.withResource('players'));
     }
 
     teams(): ExecutableResource<LeagueTeamsResponse> {
@@ -60,74 +54,6 @@ class DraftResultsSubResource extends ExecutableResource<LeagueDraftResultsRespo
 
     static create(executor: RequestExecutor, pathBuilder: PathBuilder): ExecutableResource<LeagueDraftResultsResponse> {
         return new DraftResultsSubResource(LeagueDraftResultsResponseSchema, executor, pathBuilder);
-    }
-}
-
-class PlayersSubResource extends ExecutableResource<LeaguePlayersResponse> {
-
-    private _position: string | undefined = undefined;
-    private _status: PlayerStatus | undefined = undefined;
-    private _search: string | undefined = undefined;
-    private _sort: string | undefined = undefined;
-    private _sort_type: string | undefined = undefined;
-    private _sort_season: string | undefined = undefined;
-    private _sort_week: string | undefined = undefined;
-    private _start: string | undefined = undefined;
-    private _count: string | undefined = undefined;
-
-    //TODO: sort_date (baseball, basketball, hockey only)
-
-    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
-        super(schema, executor, pathBuilder);
-    }
-
-    static create(executor: RequestExecutor, pathBuilder: PathBuilder) {
-        return new PlayersSubResource(LeagueDraftResultsResponseSchema, executor, pathBuilder);
-    }
-
-    position(position: string) {
-        this._position = position;
-        return this;
-    }
-
-    status(status: PlayerStatus): this {
-        this._status = status;
-        return this;
-    }
-
-    search(name: string): this {
-        this._search = name;
-        return this;
-    }
-
-    sort(sort: string): this {
-        this._sort = sort;
-        return this;
-    }
-
-    sortType(sortType: string): this {
-        this._sort_type = sortType;
-        return this;
-    }
-
-    sortSeason(sortSeason: string): this {
-        this._sort_season = sortSeason;
-        return this;
-    }
-
-    sortWeek(week: number): this {
-        this._sort_week = week.toString();
-        return this;
-    }
-
-    start(start: number): this {
-        this._start = start.toString();
-        return this;
-    }
-
-    count(count: number): this {
-        this._count = count.toString();
-        return this;
     }
 }
 
@@ -191,7 +117,7 @@ class TransactionsSubResource extends ExecutableResource<LeagueTransactionsRespo
             filterParams.set('team_key', [this.team_key]);
         }
         if (this._count) {
-            filterParams.set('count', [this.count.toString()])
+            filterParams.set('count', [this._count.toString()])
         }
 
         return this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), LeagueTransactionsResponseSchema);

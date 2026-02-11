@@ -10,6 +10,7 @@ import { LeagueSettingsResponse } from '../../../main/schema/SettingsSchema';
 import { LeagueTransactionsResponse } from '../../../main/schema/TransactionsSchema';
 import { LeagueResponse } from '../../../main/schema/LeagueSchema';
 import { LeagueTeamsResponse } from '../../../main/schema/LeagueTeamsSchema';
+import { TransactionType } from '../../../main/enum/TransactionType';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
@@ -117,7 +118,7 @@ test('league teams', async () => {
     verify(mockedAxiosClient.get(endpoint)).once();
 });
 
-test('league settings, invalid schema', async () => {
+test('league teams, invalid schema', async () => {
     const xmlContent = await getMockResponse('LeagueTeamsInvalidResponse.xml');
     const successfulResponse: AxiosResponse = {
         data: xmlContent,
@@ -165,10 +166,16 @@ test('league transactions, multiple filters', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const endpoint = `/league/${leagueKey}/transactions`
+    const endpoint = `/league/${leagueKey}/transactions;type=add;team_key=teamKey;count=3`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: LeagueTransactionsResponse = await yahooClient.league(leagueKey).transactions().get();
+    const response: LeagueTransactionsResponse = await yahooClient
+        .league(leagueKey)
+        .transactions()
+        .withTeamKey('teamKey')
+        .withType(TransactionType.ADD)
+        .count(3)
+        .get();
     
     expect(response).not.toBeNull();
 

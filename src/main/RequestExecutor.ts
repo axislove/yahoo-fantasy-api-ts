@@ -15,13 +15,10 @@ export class RequestExecutor {
     }
 
     async makeGetRequest<T>(path: string, schema: ZodType): Promise<T> {
-        console.log("Making request to: " + path);
         try {
             const response = await this.client.get(path);
             if (response.status != HttpStatusCode.Ok.valueOf()) {
-
                 // TODO: api errors
-                console.log("bad status");
             }
             const responseXml = response.data as string;
             const parsedJson = await parseStringPromise(responseXml, this.parserOptions) as string;
@@ -31,7 +28,6 @@ export class RequestExecutor {
         } catch (error: any) {
             console.error(`Error making GET to endpoint: ${path}`);
             if (error instanceof ZodError) {
-                console.log(error.issues);
                 throw new Error("ZodError occurred");
             }
             

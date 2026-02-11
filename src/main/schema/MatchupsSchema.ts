@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 import { TeamExtendedInfoSchema } from "./TeamSchema";
 
 export const MatchupGradeSchema = z.strictObject({
@@ -17,12 +17,12 @@ export const MatchupSchema = z.strictObject({
     is_matchup_recap_available: z.string(),
     matchup_recap_url: z.string().optional(),
     matchup_recap_title: z.string().optional(),
-    matchup_grades: z.object({
+    matchup_grades: z.strictObject({
         matchup_grade: z.array(MatchupGradeSchema)}
     ).optional(),
     is_tied: z.string().optional(),
     winner_team_key: z.string().optional(),
-    teams: z.object({
+    teams: z.strictObject({
         count: z.string(),
         team: z.array(TeamExtendedInfoSchema)
     })

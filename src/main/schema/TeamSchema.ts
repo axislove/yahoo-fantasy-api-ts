@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 import { ManagerSchema } from "./ManagerSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
 import { PlayerSchema } from "./PlayerSchema";
@@ -9,8 +9,8 @@ export const TeamSchema = z.strictObject({
     name: z.string(),
     is_owned_by_current_login: z.string().optional(),
     url: z.string(),
-    team_logos: z.object({
-        team_logo: z.object({
+    team_logos: z.strictObject({
+        team_logo: z.strictObject({
             size: z.string(),
             url: z.string()
         })
@@ -19,7 +19,7 @@ export const TeamSchema = z.strictObject({
     waiver_priority: z.string(),
     number_of_moves: z.string(),
     number_of_trades: z.string(),
-    roster_adds: z.object({
+    roster_adds: z.strictObject({
         coverage_type: z.string(),
         coverage_value: z.string(),
         value: z.string()
@@ -29,35 +29,35 @@ export const TeamSchema = z.strictObject({
     has_draft_grade: z.string(),
     draft_grade: z.string().optional(),
     draft_recap_url: z.string(),
-    managers: z.object({
+    managers: z.strictObject({
         manager: z.union([ManagerSchema, z.array(ManagerSchema)])
     })
 });
 
-const TeamProjectedPointsSchema = z.object({
+const TeamProjectedPointsSchema = z.strictObject({
     coverage_type: z.string(),
     week: z.string(),
     total: z.string()
 });
 
-export const TeamExtendedInfoSchema = z.object({
+export const TeamExtendedInfoSchema = z.strictObject({
     ...TeamSchema.shape,
     win_probability: z.string(),
-    team_points: z.object({
+    team_points: z.strictObject({
         coverage_type: z.string(),
         week: z.string(),
         total: z.string()
     }),
-    team_projected_points: z.object({
+    team_projected_points: z.strictObject({
         coverage_type: z.string(),
         week: z.string(),
         total: z.string()
     })
 });
 
-const TeamStatsSchema = z.object({
+const TeamStatsSchema = z.strictObject({
     ...TeamSchema.shape,
-    team_points: z.object({
+    team_points: z.strictObject({
         coverage_type: z.string(),
         season: z.string().optional(),
         week: z.string().optional(),
@@ -73,7 +73,7 @@ export const TeamRosterSchema = z.strictObject({
         week: z.string(),
         is_prescoring: z.string(),
         is_editable: z.string(),
-        players: z.object({
+        players: z.strictObject({
             count: z.string(),
             player: z.array(PlayerSchema)
         })

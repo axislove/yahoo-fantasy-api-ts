@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 import { LeagueSchema } from './LeagueSchema';
 import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
@@ -22,9 +22,10 @@ const StatSchema = z.strictObject({
   abbr: z.string(),
   sort_order: z.string(),
   position_type: z.string(),
-  stat_position_types: z.object({
-    stat_position_type: z.object({
-      position_type: z.string()
+  stat_position_types: z.strictObject({
+    stat_position_type: z.strictObject({
+      position_type: z.string(),
+      is_only_display_stat: z.string().optional()
     })
   }),
   is_only_display_stat: z.string().optional(),
@@ -56,7 +57,7 @@ const StatModifierSchema = z.strictObject({
 });
 
 const StatModifiersSchema = z.strictObject({
-  stats: z.object({
+  stats: z.strictObject({
     stat: z.array(StatModifierSchema)
   })
 });

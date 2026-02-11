@@ -41,7 +41,7 @@ const draftResults: LeagueDraftResultsResponse = client.league("000.l.000000").d
 // teams
 const teams: LeagueTeamsResponse = client.league("000.l.000000").teams().get();
 
-// tranasctions
+// transactions
 const transactions: LeagueTransactionsResponse = client.league("000.l.000000").transactions().get();
 
 // scoreboard

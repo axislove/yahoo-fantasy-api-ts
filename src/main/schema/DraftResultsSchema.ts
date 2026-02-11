@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 import { LeagueSchema } from "./LeagueSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
 

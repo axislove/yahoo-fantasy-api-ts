@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 // empty schema for all responses to extend from
 export const YahooFantasyContentBaseSchema = z.object();

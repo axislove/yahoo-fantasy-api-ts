@@ -1,9 +1,9 @@
-import z from "zod";
+import { z } from "zod";
 import { LeagueSchema } from "./LeagueSchema";
 import { PlayerSchema } from "./PlayerSchema";
 import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
 
-const PlayersSchema = z.object({
+const PlayersSchema = z.strictObject({
     count: z.string(),
     player: z.array(PlayerSchema)
 });
