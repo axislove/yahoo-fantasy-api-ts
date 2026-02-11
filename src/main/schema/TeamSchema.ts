@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { ManagerSchema } from "./ManagerSchema";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
-import { PlayerSchema } from "./PlayerSchema";
+import { z } from 'zod';
+import { ManagerSchema } from './ManagerSchema';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
+import { PlayerSchema } from './PlayerSchema';
 
 export const TeamSchema = z.strictObject({
     team_key: z.string(),

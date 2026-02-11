@@ -7,20 +7,26 @@ export class PathBuilder {
 
     // append '/' and provided resource
     withResource(r: string): PathBuilder {
-        this.path += `/${r}`;
-        return this;
+        const newBuilder = new PathBuilder(this.path);
+        newBuilder.path += `/${r}`;
+
+        return newBuilder;
     }
 
     withParam(key: string, value: string): PathBuilder {
-        this.path += `;${key}=${value}`;
-        return this;
+        const newBuilder = new PathBuilder(this.path);
+        newBuilder.path += `;${key}=${value}`;
+
+        return newBuilder
     }
 
     withParams(params: Map<string, string[]>): PathBuilder {
+        const newBuilder = new PathBuilder(this.path);
         for (const [key, values] of params) {
-            this.path += `;${key}=${values.join(',')}`;
+            newBuilder.path += `;${key}=${values.join(',')}`;
         }
-        return this;
+
+        return newBuilder;
     }
 
     buildPath(): string {

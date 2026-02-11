@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { LeagueSchema } from "./LeagueSchema";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { z } from 'zod';
+import { LeagueSchema } from './LeagueSchema';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 const DraftResultSchema = z.strictObject({
     pick: z.string(),

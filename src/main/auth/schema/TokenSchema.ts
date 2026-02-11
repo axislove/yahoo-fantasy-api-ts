@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const TokenSchema = z.strictObject({
     access_token: z.string(),

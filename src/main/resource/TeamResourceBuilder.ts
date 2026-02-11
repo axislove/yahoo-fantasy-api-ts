@@ -1,9 +1,9 @@
-import { ZodType } from "zod";
-import { PathBuilder } from "../PathBuilder";
-import { RequestExecutor } from "../RequestExecutor";
-import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from "../schema/TeamMatchupsSchema";
-import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from "../schema/TeamSchema";
-import { ExecutableResource } from "../ExecutableResource";
+import { ZodType } from 'zod';
+import { PathBuilder } from '../PathBuilder';
+import { RequestExecutor } from '../RequestExecutor';
+import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from '../schema/TeamMatchupsSchema';
+import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from '../schema/TeamSchema';
+import { ExecutableResource } from '../ExecutableResource';
 
 export class TeamResourceBuilder extends ExecutableResource<TeamResponse> {
 
@@ -30,6 +30,8 @@ export class TeamResourceBuilder extends ExecutableResource<TeamResponse> {
 
 class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
 
+    private _weeks: string[] = [];
+
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
@@ -40,21 +42,34 @@ class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
 
     weeks(weeks: number[]): ExecutableResource<TeamMatchupsResponse> {
 
-        const filterParams: Map<string, string[]> = new Map<string, string[]>();
-
         // convert to string for filter param logic
         const weeksAsStrings: string[] = weeks.map((week: number) => {
             return week.toString();
         });
 
-        filterParams.set('weeks', weeksAsStrings);
-        this.pathBuilder.withParams(filterParams);
+        this._weeks.push(...weeksAsStrings);
+
+
         return this;
+    }
+
+    async get(): Promise<TeamMatchupsResponse> {
+        const filterParams: Map<string, string[]> = new Map<string, string[]>();
+
+        let pb = this.pathBuilder;
+        if (this._weeks.length > 0) {
+            filterParams.set('weeks', this._weeks);
+            pb = this.pathBuilder.withParams(filterParams);
+        }
+
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }
 
 // TODO: add 'date filter for non-nfl games
 class RosterSubResource extends ExecutableResource<TeamRosterResponse> {
+
+    private _week: string | undefined = undefined;
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -65,13 +80,25 @@ class RosterSubResource extends ExecutableResource<TeamRosterResponse> {
     }
 
     week(week: number): ExecutableResource<TeamRosterResponse> {
-        this.pathBuilder.withParam('week', week.toString());
+        this._week = week.toString();
         return this;
+    }
+
+    async get(): Promise<TeamRosterResponse> {
+        let pb = this.pathBuilder;
+        if (this._week) {
+            pb = this.pathBuilder.withParam('week', this._week);
+        }
+        
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }
 
 // TODO: add 'date' filter for non-nfl games
 class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
+
+    private type: string | undefined = undefined;
+    private _week: string | undefined = undefined;
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -82,13 +109,25 @@ class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
     }
 
     season(): ExecutableResource<TeamStatsResponse> {
-        this.pathBuilder.withParam('type', 'season');
+        this.type = 'season';
         return this;
     }
 
     week(week: number): ExecutableResource<TeamStatsResponse> {
-        this.pathBuilder.withParam('type', 'week');
-        this.pathBuilder.withParam('week', week.toString());
+        this.type = 'week';
+        this._week = week.toString();
         return this;
+    }
+
+    async get(): Promise<TeamStatsResponse> {
+        let pb = this.pathBuilder;
+        if (this.type) {
+            pb = pb.withParam('type', this.type);
+        }
+        if (this._week) {
+            pb = pb.withParam('week', this._week);
+        }
+
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }

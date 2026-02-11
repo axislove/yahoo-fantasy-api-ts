@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const PlayerBaseInfoSchema = z.strictObject({
     player_key: z.string(),

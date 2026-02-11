@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { TeamExtendedInfoSchema } from "./TeamSchema";
+import { z } from 'zod';
+import { TeamExtendedInfoSchema } from './TeamSchema';
 
 export const MatchupGradeSchema = z.strictObject({
     team_key: z.string(),

@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { LeagueSchema } from "./LeagueSchema";
-import { PlayerBaseInfoSchema } from "./PlayerSchema";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { z } from 'zod';
+import { LeagueSchema } from './LeagueSchema';
+import { PlayerBaseInfoSchema } from './PlayerSchema';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 export const TransactionDataSchema = z.strictObject({
     type: z.string(),

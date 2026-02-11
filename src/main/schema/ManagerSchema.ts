@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const ManagerSchema = z.strictObject({
     manager_id: z.string(),

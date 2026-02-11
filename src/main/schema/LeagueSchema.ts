@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { z } from 'zod';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 export const LeagueSchema = z.strictObject({
   league_key: z.string(),

@@ -1,10 +1,10 @@
-import { GameType } from "../enum/GameType";
-import { PathBuilder } from "../PathBuilder";
-import { RequestExecutor } from "../RequestExecutor";
-import { GameCode } from "../enum/GameCode";
-import { GamesResponse, GamesResponseSchema } from "../schema/GameSchema";
-import { ExecutableResource } from "../ExecutableResource";
-import { ZodType } from "zod";
+import { GameType } from '../enum/GameType';
+import { PathBuilder } from '../PathBuilder';
+import { RequestExecutor } from '../RequestExecutor';
+import { GameCode } from '../enum/GameCode';
+import { GamesResponse, GamesResponseSchema } from '../schema/GameSchema';
+import { ExecutableResource } from '../ExecutableResource';
+import { ZodType } from 'zod';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#games-collection
@@ -93,7 +93,6 @@ export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
             filterParams.set('is_available', ['1']);
         }
 
-        this.pathBuilder.withParams(filterParams);
-        return await this.executor.makeGetRequest(this.pathBuilder.buildPath(), GamesResponseSchema);
+        return await this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), GamesResponseSchema);
     }
 }

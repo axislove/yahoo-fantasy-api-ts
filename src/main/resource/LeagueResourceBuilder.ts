@@ -1,15 +1,15 @@
-import { ZodType } from "zod";
-import { PathBuilder } from "../PathBuilder";
-import { RequestExecutor } from "../RequestExecutor";
-import { ExecutableResource } from "../ExecutableResource";
-import { LeagueResponse, LeagueResponseSchema } from "../schema/LeagueSchema";
-import { LeagueTransactionsResponse, LeagueTransactionsResponseSchema } from "../schema/TransactionsSchema";
-import { TransactionType } from "../enum/TransactionType";
-import { LeagueSettingsResponse, LeagueSettingsResponseSchema } from "../schema/SettingsSchema";
-import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from "../schema/StandingsSchema";
-import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from "../schema/ScoreboardSchema";
-import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from "../schema/DraftResultsSchema";
-import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from "../schema/LeagueTeamsSchema";
+import { ZodType } from 'zod';
+import { PathBuilder } from '../PathBuilder';
+import { RequestExecutor } from '../RequestExecutor';
+import { ExecutableResource } from '../ExecutableResource';
+import { LeagueResponse, LeagueResponseSchema } from '../schema/LeagueSchema';
+import { LeagueTransactionsResponse, LeagueTransactionsResponseSchema } from '../schema/TransactionsSchema';
+import { TransactionType } from '../enum/TransactionType';
+import { LeagueSettingsResponse, LeagueSettingsResponseSchema } from '../schema/SettingsSchema';
+import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from '../schema/StandingsSchema';
+import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from '../schema/ScoreboardSchema';
+import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from '../schema/DraftResultsSchema';
+import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from '../schema/LeagueTeamsSchema';
 
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
@@ -126,6 +126,8 @@ class TransactionsSubResource extends ExecutableResource<LeagueTransactionsRespo
 
 class ScoreboardSubResource extends ExecutableResource<LeagueScoreboardResponse> {
 
+    private _week: string | undefined = undefined;
+
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
@@ -135,8 +137,17 @@ class ScoreboardSubResource extends ExecutableResource<LeagueScoreboardResponse>
     }
 
     week(week: number): ExecutableResource<LeagueScoreboardResponse> {
-        this.pathBuilder.withParam('week', week.toString());
+        this._week = week.toString();
         return this;
+    }
+
+    async get(): Promise<LeagueScoreboardResponse> {
+        let pb = this.pathBuilder;
+        if (this._week) {
+            pb = this.pathBuilder.withParam('week', this._week);
+        }
+
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }
 

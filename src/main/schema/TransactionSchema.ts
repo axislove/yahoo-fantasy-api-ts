@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { PlayerBaseInfoSchema } from "./PlayerSchema";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { z } from 'zod';
+import { PlayerBaseInfoSchema } from './PlayerSchema';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 const TransactionDataSchema = z.strictObject({
     type: z.string(),

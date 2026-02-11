@@ -1,9 +1,9 @@
-import { GameResponse, GameResponseSchema } from "../schema/GameSchema";
-import { RequestExecutor } from "../RequestExecutor";
-import { GameCode } from "../enum/GameCode";
-import { PathBuilder } from "../PathBuilder";
-import { ExecutableResource } from "../ExecutableResource";
-import { ZodType } from "zod";
+import { GameResponse, GameResponseSchema } from '../schema/GameSchema';
+import { RequestExecutor } from '../RequestExecutor';
+import { GameCode } from '../enum/GameCode';
+import { PathBuilder } from '../PathBuilder';
+import { ExecutableResource } from '../ExecutableResource';
+import { ZodType } from 'zod';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#game-resource
@@ -17,6 +17,8 @@ import { ZodType } from "zod";
  */
 export class GameResourceBuilder extends ExecutableResource<GameResponse> implements PermitGameKey {
 
+    private gameKey: GameCode | string = "";
+
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
@@ -26,13 +28,17 @@ export class GameResourceBuilder extends ExecutableResource<GameResponse> implem
     }
 
     withGameCode(gameCode: GameCode): ExecutableResource<GameResponse> {
-        this.pathBuilder.withResource(gameCode);
+        this.gameKey = gameCode;
         return this;
     }
 
     withGameId(gameId: string): ExecutableResource<GameResponse> {
-        this.pathBuilder.withResource(gameId);
+        this.gameKey = gameId;
         return this;
+    }
+
+    async get(): Promise<GameResponse> {
+        return await this.executor.makeGetRequest(this.pathBuilder.withResource(this.gameKey).buildPath(), this.schema);
     }
 }
 

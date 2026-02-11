@@ -1,6 +1,6 @@
-import { AxiosInstance, HttpStatusCode } from "axios";
-import { ParserOptions, parseStringPromise } from "xml2js";
-import { ZodError, ZodType } from "zod";
+import { AxiosInstance, HttpStatusCode } from 'axios';
+import { ParserOptions, parseStringPromise } from 'xml2js';
+import { ZodError, ZodType } from 'zod';
 
 export class RequestExecutor {
     private readonly client: AxiosInstance;

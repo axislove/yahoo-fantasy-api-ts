@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { LeagueSchema } from "./LeagueSchema";
-import { TeamSchema } from "./TeamSchema";
-import { YahooFantasyContentBaseSchema } from "./FantasyContentSchema";
+import { z } from 'zod';
+import { LeagueSchema } from './LeagueSchema';
+import { TeamSchema } from './TeamSchema';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 const TeamsSchema = z.strictObject({
     count: z.string(),
