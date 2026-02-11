@@ -29,7 +29,7 @@ test('team', async () => {
     const endpoint = `/team/${teamKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamResponse = await yahooClient.team().teamKey(teamKey).get();
+    const response: TeamResponse = await yahooClient.team(teamKey).get();
     
     expect(response).not.toBeNull();
 
@@ -49,7 +49,7 @@ test('team, invalid schema', async () => {
     const endpoint = `/team/${teamKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
     
-    await expect(yahooClient.team().teamKey(teamKey).get()).rejects.toThrowError('ZodError occurred')
+    await expect(yahooClient.team(teamKey).get()).rejects.toThrowError('ZodError occurred')
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
@@ -67,7 +67,7 @@ test('team matchups', async () => {
     const endpoint = `/team/${teamKey}/matchups`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamResponse = await yahooClient.team().teamKey(teamKey).matchups().get();
+    const response: TeamResponse = await yahooClient.team(teamKey).matchups().get();
     
     expect(response).not.toBeNull();
 
@@ -87,7 +87,7 @@ test('team matchups with weeks', async () => {
     const endpoint = `/team/${teamKey}/matchups;weeks=1,4`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamResponse = await yahooClient.team().teamKey(teamKey).matchups().weeks([1, 4]).get();
+    const response: TeamResponse = await yahooClient.team(teamKey).matchups().weeks([1, 4]).get();
     
     expect(response).not.toBeNull();
 
@@ -107,7 +107,7 @@ test('team stats', async () => {
     const endpoint = `/team/${teamKey}/stats`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamStatsResponse = await yahooClient.team().teamKey(teamKey).stats().get();
+    const response: TeamStatsResponse = await yahooClient.team(teamKey).stats().get();
     
     expect(response).not.toBeNull();
 
@@ -127,7 +127,7 @@ test('team stats - season', async () => {
     const endpoint = `/team/${teamKey}/stats;type=season`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamStatsResponse = await yahooClient.team().teamKey(teamKey).stats().season().get();
+    const response: TeamStatsResponse = await yahooClient.team(teamKey).stats().season().get();
     
     expect(response).not.toBeNull();
 
@@ -147,7 +147,7 @@ test('team stats - week', async () => {
     const endpoint = `/team/${teamKey}/stats;type=week;week=10`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamStatsResponse = await yahooClient.team().teamKey(teamKey).stats().week(10).get();
+    const response: TeamStatsResponse = await yahooClient.team(teamKey).stats().week(10).get();
     
     expect(response).not.toBeNull();
 
@@ -167,7 +167,7 @@ test('team roster', async () => {
     const endpoint = `/team/${teamKey}/roster`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamRosterResponse = await yahooClient.team().teamKey(teamKey).roster().get();
+    const response: TeamRosterResponse = await yahooClient.team(teamKey).roster().get();
     
     expect(response).not.toBeNull();
 
@@ -187,7 +187,7 @@ test('team roster, week filter', async () => {
     const endpoint = `/team/${teamKey}/roster;week=10`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TeamRosterResponse = await yahooClient.team().teamKey(teamKey).roster().week(10).get();
+    const response: TeamRosterResponse = await yahooClient.team(teamKey).roster().week(10).get();
     
     expect(response).not.toBeNull();
 

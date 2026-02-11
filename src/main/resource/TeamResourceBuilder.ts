@@ -1,45 +1,36 @@
-import { ZodType } from "zod";
-import { PathBuilder } from "../PathBuilder";
-import { RequestExecutor } from "../RequestExecutor";
-import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from "../schema/TeamMatchupsSchema";
-import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from "../schema/TeamSchema";
-import { ExecutableResource } from "../ExecutableResource";
+import { ZodType } from 'zod';
+import { PathBuilder } from '../PathBuilder';
+import { RequestExecutor } from '../RequestExecutor';
+import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from '../schema/TeamMatchupsSchema';
+import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from '../schema/TeamSchema';
+import { ExecutableResource } from '../ExecutableResource';
 
-export class TeamResourceBuilder extends ExecutableResource<TeamResponse> implements PermitTeamKey, PermitMatchupsOrStatsOrGet<TeamResponse> {
+export class TeamResourceBuilder extends ExecutableResource<TeamResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
 
-    static create(executor: RequestExecutor): PermitTeamKey {
-        return new TeamResourceBuilder(TeamResponseSchema, executor, new PathBuilder('/team'));
-    }
-
-    teamKey(teamKey: string): PermitMatchupsOrStatsOrGet<TeamResponse> {
-        this.pathBuilder.withResource(teamKey);
-        return this;
+    static create(teamKey: string, executor: RequestExecutor) {
+        return new TeamResourceBuilder(TeamResponseSchema, executor, new PathBuilder(`/team/${teamKey}`));
     }
 
     matchups(): MatchupsSubResource {
-        this.pathBuilder.withResource('matchups');
-        return MatchupsSubResource.create(this.executor, this.pathBuilder);
+        return MatchupsSubResource.create(this.executor, this.pathBuilder.withResource('matchups'));
     }
 
     roster(): RosterSubResource {
-        this.pathBuilder.withResource('roster');
-        return RosterSubResource.create(this.executor, this.pathBuilder);
+        return RosterSubResource.create(this.executor, this.pathBuilder.withResource('roster'));
     }
 
     stats(): StatsSubResource {
-        this.pathBuilder.withResource('stats');
-        return StatsSubResource.create(this.executor, this.pathBuilder);
+        return StatsSubResource.create(this.executor, this.pathBuilder.withResource('stats'));
     }
 }
 
 class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
 
-    // filters
-    private readonly _weeks: string[] = [];
+    private _weeks: string[] = [];
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -50,29 +41,35 @@ class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
     }
 
     weeks(weeks: number[]): ExecutableResource<TeamMatchupsResponse> {
+
         // convert to string for filter param logic
-        const weeksAsString: string[] = weeks.map((week: number) => {
+        const weeksAsStrings: string[] = weeks.map((week: number) => {
             return week.toString();
         });
 
-        this._weeks.push(...weeksAsString);
+        this._weeks.push(...weeksAsStrings);
+
+
         return this;
     }
 
     async get(): Promise<TeamMatchupsResponse> {
         const filterParams: Map<string, string[]> = new Map<string, string[]>();
 
+        let pb = this.pathBuilder;
         if (this._weeks.length > 0) {
             filterParams.set('weeks', this._weeks);
-            this.pathBuilder.withParams(filterParams);
+            pb = this.pathBuilder.withParams(filterParams);
         }
 
-        return await this.executor.makeGetRequest(this.pathBuilder.buildPath(), TeamMatchupsResponseSchema);
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }
 
 // TODO: add 'date filter for non-nfl games
 class RosterSubResource extends ExecutableResource<TeamRosterResponse> {
+
+    private _week: string | undefined = undefined;
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -83,13 +80,25 @@ class RosterSubResource extends ExecutableResource<TeamRosterResponse> {
     }
 
     week(week: number): ExecutableResource<TeamRosterResponse> {
-        this.pathBuilder.withParam('week', week.toString());
+        this._week = week.toString();
         return this;
+    }
+
+    async get(): Promise<TeamRosterResponse> {
+        let pb = this.pathBuilder;
+        if (this._week) {
+            pb = this.pathBuilder.withParam('week', this._week);
+        }
+        
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
     }
 }
 
 // TODO: add 'date' filter for non-nfl games
 class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
+
+    private type: string | undefined = undefined;
+    private _week: string | undefined = undefined;
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -100,24 +109,25 @@ class StatsSubResource extends ExecutableResource<TeamStatsResponse> {
     }
 
     season(): ExecutableResource<TeamStatsResponse> {
-        this.pathBuilder.withParam('type', 'season');
+        this.type = 'season';
         return this;
     }
 
     week(week: number): ExecutableResource<TeamStatsResponse> {
-        this.pathBuilder.withParam('type', 'week');
-        this.pathBuilder.withParam('week', week.toString());
+        this.type = 'week';
+        this._week = week.toString();
         return this;
     }
-}
 
-export interface PermitTeamKey {
-    teamKey(teamKey: string): PermitMatchupsOrStatsOrGet<TeamResponse>;
-}
+    async get(): Promise<TeamStatsResponse> {
+        let pb = this.pathBuilder;
+        if (this.type) {
+            pb = pb.withParam('type', this.type);
+        }
+        if (this._week) {
+            pb = pb.withParam('week', this._week);
+        }
 
-interface PermitMatchupsOrStatsOrGet<T> {
-    matchups(): MatchupsSubResource;
-    roster(): RosterSubResource;
-    stats(): StatsSubResource;
-    get(): Promise<T>;
+        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
+    }
 }

@@ -25,27 +25,41 @@ test('YahooFantasyClient, token and client', () => {
 /**
  * Tests that YahooFantasyClient can make successive requests to different endpoints.
  * If our path building is working correctly, we should see this succeed, as the path
- * is different in these API calls.
+ * is different in these API calls, and nothing additional should be appended to the
+ * paths.
  */
-test('YahooFantasyClient, multiple resources', async () => {
+test('multiple subresource calls dont corrupt paths', async () => {
     const mockedAxiosClient: AxiosInstance = mock<AxiosInstance>();
     const client: YahooFantasyClient = new YahooFantasyClient('accessToken', instance(mockedAxiosClient));
     expect(client).not.toBeNull();
 
-    const xmlContent = await getMockResponse('GameResourceResponse.xml');
-    const successfulResponse: AxiosResponse = {
-        data: xmlContent,
+    const leagueTeamsXml = await getMockResponse('LeagueTeamsResponse.xml');
+    const leagueTeamsResponse: AxiosResponse = {
+        data: leagueTeamsXml,
         status: 200,
         statusText: 'OK',
         headers: {},
         config: {} as InternalAxiosRequestConfig
     }
 
-    when(mockedAxiosClient.get('/game/123')).thenResolve(successfulResponse);
-    await client.game().withGameId('123').get();
-    verify(mockedAxiosClient.get('/game/123')).once();
+    const leagueStandingsXml = await getMockResponse('LeagueStandingsResponse.xml');
+    const leagueStandingsResponse: AxiosResponse = {
+        data: leagueStandingsXml,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
 
-    when(mockedAxiosClient.get('/game/456')).thenResolve(successfulResponse);
-    await client.game().withGameId('456').get();
-    verify(mockedAxiosClient.get('/game/456')).once();
+    const leagueKey = "league_key";
+    const league = client.league(leagueKey);
+    
+    when(mockedAxiosClient.get(`/league/${leagueKey}/teams`)).thenResolve(leagueTeamsResponse);
+    when(mockedAxiosClient.get(`/league/${leagueKey}/standings`)).thenResolve(leagueStandingsResponse);
+    
+    await league.teams().get();
+    await league.standings().get();
+    
+    verify(mockedAxiosClient.get(`/league/${leagueKey}/teams`)).once();
+    verify(mockedAxiosClient.get(`/league/${leagueKey}/standings`)).once();
 });

@@ -1,9 +1,10 @@
-import axios, { AxiosInstance } from "axios";
-import { GameResourceBuilder, PermitGameKey } from "./resource/GameResourceBuilder";
-import { RequestExecutor } from "./RequestExecutor";
-import { GamesCollectionBuilder } from "./collection/GamesCollectionBuilder";
-import { TeamResourceBuilder } from "./resource/TeamResourceBuilder";
-import { TransactionResourceBuilder } from "./resource/TransactionResourceBuilder";
+import axios, { AxiosInstance } from 'axios';
+import { GameResourceBuilder, PermitGameKey } from './resource/GameResourceBuilder';
+import { RequestExecutor } from './RequestExecutor';
+import { GamesCollectionBuilder } from './collection/GamesCollectionBuilder';
+import { TeamResourceBuilder } from './resource/TeamResourceBuilder';
+import { PermitTransactionKey, TransactionResourceBuilder } from './resource/TransactionResourceBuilder';
+import { LeagueResourceBuilder } from './resource/LeagueResourceBuilder';
 
 export class YahooFantasyClient {
     private static readonly BASE_URL: string = "https://fantasysports.yahooapis.com/fantasy/v2/";
@@ -35,11 +36,15 @@ export class YahooFantasyClient {
         return GamesCollectionBuilder.create(this.executor);
     }
 
-    team() {
-        return TeamResourceBuilder.create(this.executor);
+    league(leagueKey: string): LeagueResourceBuilder {
+        return LeagueResourceBuilder.create(leagueKey, this.executor);
     }
 
-    transaction() {
+    team(teamKey: string): TeamResourceBuilder {
+        return TeamResourceBuilder.create(teamKey, this.executor);
+    }
+
+    transaction(): PermitTransactionKey {
         return TransactionResourceBuilder.create(this.executor);
     }
 }

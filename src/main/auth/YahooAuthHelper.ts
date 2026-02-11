@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { YahooFantasyClient } from "../YahooFantasyClient";
-import { TokenResponse, TokenSchema } from "./schema/TokenSchema";
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { YahooFantasyClient } from '../YahooFantasyClient';
+import { TokenResponse, TokenSchema } from './schema/TokenSchema';
 
 export class YahooAuthHelper {
     private static readonly BASE_URL: string = "https://api.login.yahoo.com/oauth2";

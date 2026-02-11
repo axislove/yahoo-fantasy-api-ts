@@ -1,6 +1,6 @@
-import { AxiosInstance, HttpStatusCode } from "axios";
-import { ParserOptions, parseStringPromise } from "xml2js";
-import { ZodError, ZodType } from "zod";
+import { AxiosInstance, HttpStatusCode } from 'axios';
+import { ParserOptions, parseStringPromise } from 'xml2js';
+import { ZodError, ZodType } from 'zod';
 
 export class RequestExecutor {
     private readonly client: AxiosInstance;
@@ -15,13 +15,10 @@ export class RequestExecutor {
     }
 
     async makeGetRequest<T>(path: string, schema: ZodType): Promise<T> {
-        console.log("Making request to: " + path);
         try {
             const response = await this.client.get(path);
             if (response.status != HttpStatusCode.Ok.valueOf()) {
-
                 // TODO: api errors
-                console.log("bad status");
             }
             const responseXml = response.data as string;
             const parsedJson = await parseStringPromise(responseXml, this.parserOptions) as string;
