@@ -1,5 +1,7 @@
 # Yahoo Fantasy API for TypeScript
 
+![Version](https://img.shields.io/badge/version-0.0.4-blue)
+
 WARNING: This repo is a work in progress and not yet ready for public consumption. If interested, follow along for the 1.0.0 release of the public API.
 
 Beginnings of a TypeScript library for interacting with the Yahoo Fantasy Sports API. This library uses Zod for 
