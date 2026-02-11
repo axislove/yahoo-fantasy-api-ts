@@ -20,7 +20,7 @@ Basic usage:
 ````javascript
 const client: YahooFantasyClient = new YahooFantasyClient("my-access-token");
 
-/****** Game Resource******/
+/****** Game Resource ******/
 
 // game
 const game: GameResponse = client.game().withGameId("461").get();
@@ -30,7 +30,30 @@ const game: GameResponse = client.game().withGameId("461").get();
 // games
 const games: GamesResponse = client.games().withGameKey("461").get();
 
-/****** Team Resource******/
+/****** League Resource ******/
+
+// league
+const league: LeagueResponse = client.league("000.l.000000").get();
+
+// draft results
+const draftResults: LeagueDraftResultsResponse = client.league("000.l.000000").draftResults().get();
+
+// teams
+const teams: LeagueTeamsResponse = client.league("000.l.000000").teams().get();
+
+// tranasctions
+const transactions: LeagueTransactionsResponse = client.league("000.l.000000").transactions().get();
+
+// scoreboard
+const scoreboard: LeagueScoreboardResponse = client.league("000.l.000000").scoreboard().get();
+
+// settings
+const settings: LeagueSettingsResponse = client.league("000.l.000000").settings().get();
+
+// standings
+const standings: LeagueStandingsResponse = client.league("000.l.000000").standings().get();
+
+/****** Team Resource ******/
 
 // team
 const team: TeamResponse = client.team().teamKey("000.l.000000.t.1").get();
@@ -44,7 +67,7 @@ const teamRoster: TeamRosterResponse = client.team().teamKey("000.l.000000.t.1")
 // stats
 const teamStats: TeamStatsResponse = client.team().teamKey("000.l.000000.t.1").stats().get();
 
-/****** Transaction Resource******/
+/****** Transaction Resource ******/
 
 const transaction: TransactionResponse = client.transaction().withKey("223.l.431.tr.26").get();
 ````
