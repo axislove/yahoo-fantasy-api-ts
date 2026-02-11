@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fantasy_content xml:lang="en-US" yahoo:uri="http://fantasysports.yahooapis.com/fantasy/v2/league/000.l.000000" time="25.371074676514ms" copyright="Certain Data by Sportradar, Stats Perform and Rotowire" refresh_rate="60" xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" xmlns="http://fantasysports.yahooapis.com/fantasy/v2/base.rng">
+    <league>
+        <!-- <league_key>1FY6ZBj8OI4iiVWE</league_key> -->
+        <league_id>kxl8HmK7QwkzcVqq</league_id>
+        <name>abtChbKR8u2eNa7V</name>
+        <url>6lmTL6AplpMgwjpo</url>
+        <logo_url>C6WuhOUAn8uZO2My</logo_url>
+        <password/>
+        <draft_status>QRHuzzrCyliGwrga</draft_status>
+        <num_teams>S5CWNcd0sGiM6ojC</num_teams>
+        <edit_key>F4DX71gsduFlS0us</edit_key>
+        <weekly_deadline/>
+        <roster_type>QuL5JpMve2pMqa8a</roster_type>
+        <league_update_timestamp>N7aelp7XCssejQfw</league_update_timestamp>
+        <scoring_type>PisJmELvDe8OWPgb</scoring_type>
+        <league_type>MiNgMVx7L2FXiRWt</league_type>
+        <renew>xvhHaZfzY5uhxONP</renew>
+        <renewed/>
+        <felo_tier>-Xj_9ebgeb8baubm</felo_tier>
+        <is_highscore></is_highscore>
+        <matchup_week>m_sksuXn45OWj7Kw</matchup_week>
+        <iris_group_chat_id/>
+        <short_invitation_url>JCfxCXy7uqKHaOvc</short_invitation_url>
+        <allow_add_to_dl_extra_pos>Q1LgCZ6_Z6qEOoUQ</allow_add_to_dl_extra_pos>
+        <is_pro_league>NGYN2m9v27IZoQh1</is_pro_league>
+        <is_cash_league>tUgdPnzVOO28GyyI</is_cash_league>
+        <!-- <current_week>OC4aoY_nyUlkbwul</current_week> -->
+        <start_week>om7j4CE5XIPCYuaS</start_week>
+        <start_date>adP3sJmDDIb5QXDV</start_date>
+        <end_week>HOJAzoH0GWdqvT86</end_week>
+        <!-- <end_date>Uk2mHDlt7ZHV8GNs</end_date> -->
+        <is_finished>_tYCdUEfbsZVB2TC</is_finished>
+        <is_plus_league>3JUyiyzqlnLbh8V1</is_plus_league>
+        <game_code>8aUHmaY_kfyY_hHo</game_code>
+        <season>jMf9174GuJPFet8A</season>
+    </league>
+</fantasy_content>
+<!-- fantasy-sports-api- -public-production-bf1-755dbc7d94-rz7vn Tue Feb 10 23:03:26 UTC 2026 -->

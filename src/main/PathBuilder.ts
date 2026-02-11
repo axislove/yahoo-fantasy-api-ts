@@ -5,19 +5,22 @@ export class PathBuilder {
         this.path = path;
     }
 
-    // append / and provided resource
-    withResource(r: string): void {
+    // append '/' and provided resource
+    withResource(r: string): this {
         this.path += `/${r}`;
+        return this;
     }
 
-    withParam(key: string, value: string): void {
+    withParam(key: string, value: string): this {
         this.path += `;${key}=${value}`;
+        return this;
     }
 
-    withParams(params: Map<string, string[]>): void {
+    withParams(params: Map<string, string[]>): this {
         for (const [key, values] of params) {
             this.path += `;${key}=${values.join(',')}`;
         }
+        return this;
     }
 
     buildPath(): string {

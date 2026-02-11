@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { GameResourceBuilder, PermitGameKey } from "./resource/GameResourceBuilder";
 import { RequestExecutor } from "./RequestExecutor";
 import { GamesCollectionBuilder } from "./collection/GamesCollectionBuilder";
-import { PermitTeamKey, TeamResourceBuilder } from "./resource/TeamResourceBuilder";
+import { TeamResourceBuilder } from "./resource/TeamResourceBuilder";
 import { PermitTransactionKey, TransactionResourceBuilder } from "./resource/TransactionResourceBuilder";
 import { LeagueResourceBuilder } from "./resource/LeagueResourceBuilder";
 
@@ -36,12 +36,12 @@ export class YahooFantasyClient {
         return GamesCollectionBuilder.create(this.executor);
     }
 
-    league(): LeagueResourceBuilder {
-        return LeagueResourceBuilder.create(this.executor);
+    league(leagueKey: string): LeagueResourceBuilder {
+        return LeagueResourceBuilder.create(leagueKey, this.executor);
     }
 
-    team(): PermitTeamKey {
-        return TeamResourceBuilder.create(this.executor);
+    team(teamKey: string): TeamResourceBuilder {
+        return TeamResourceBuilder.create(teamKey, this.executor);
     }
 
     transaction(): PermitTransactionKey {

@@ -23,28 +23,28 @@ const client: YahooFantasyClient = new YahooFantasyClient("my-access-token");
 /****** Game Resource******/
 
 // game
-const gameResponse: GameResponse = client.game().withGameId("461").get();
+const game: GameResponse = client.game().withGameId("461").get();
 
 /****** Games Collection ******/
 
 // games
-const gamesResponse: GamesResponse = client.games().withGameKey("461").get();
+const games: GamesResponse = client.games().withGameKey("461").get();
 
 /****** Team Resource******/
 
 // team
-const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").get();
+const team: TeamResponse = client.team().teamKey("000.l.000000.t.1").get();
 
 // matchups
-const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").matchups().get();
+const teamMatchups: TeamMatchupsResponse = client.team().teamKey("000.l.000000.t.1").matchups().get();
 
 // roster
-const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").roster().get();
+const teamRoster: TeamRosterResponse = client.team().teamKey("000.l.000000.t.1").roster().get();
 
 // stats
-const teamResponse: TeamResponse = client.team().teamKey("000.l.000000.t.1").stats().get();
+const teamStats: TeamStatsResponse = client.team().teamKey("000.l.000000.t.1").stats().get();
 
-/****** Team Resource******/
+/****** Transaction Resource******/
 
 const transaction: TransactionResponse = client.transaction().withKey("223.l.431.tr.26").get();
 ````
@@ -52,7 +52,7 @@ const transaction: TransactionResponse = client.transaction().withKey("223.l.431
 ## Tests & Linting
 ````javascript
 npm run unitTest
-```
+````
 
 ## License
 MIT License
