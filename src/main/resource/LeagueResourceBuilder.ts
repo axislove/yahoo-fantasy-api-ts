@@ -10,6 +10,8 @@ import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from "../schem
 import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from "../schema/ScoreboardSchema";
 import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from "../schema/DraftResultsSchema";
 import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from "../schema/LeagueTeamsSchema";
+import { LeaguePlayersResponse } from "../schema/LeaguePlayersSchema";
+import { PlayerStatus } from "../enum/PlayerStatus";
 
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
@@ -25,6 +27,10 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
         return DraftResultsSubResource.create(this.executor, this.pathBuilder.withResource('draftresults'));
     }
 
+    players() {
+        return PlayersSubResource.create(this.executor, this.pathBuilder.withResource('players'));
+    }
+
     teams(): ExecutableResource<LeagueTeamsResponse> {
         return TeamsSubResource.create(this.executor, this.pathBuilder.withResource('teams'));
     }
@@ -33,7 +39,7 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
         return TransactionsSubResource.create(this.executor, this.pathBuilder.withResource('transactions'));
     }
 
-    scoreboard(): PermitWeekAndGet<LeagueScoreboardResponse> {
+    scoreboard(): ScoreboardSubResource {
         return ScoreboardSubResource.create(this.executor, this.pathBuilder.withResource('scoreboard'));
     }
 
@@ -57,6 +63,74 @@ class DraftResultsSubResource extends ExecutableResource<LeagueDraftResultsRespo
     }
 }
 
+class PlayersSubResource extends ExecutableResource<LeaguePlayersResponse> {
+
+    private _position: string | undefined = undefined;
+    private _status: PlayerStatus | undefined = undefined;
+    private _search: string | undefined = undefined;
+    private _sort: string | undefined = undefined;
+    private _sort_type: string | undefined = undefined;
+    private _sort_season: string | undefined = undefined;
+    private _sort_week: string | undefined = undefined;
+    private _start: string | undefined = undefined;
+    private _count: string | undefined = undefined;
+
+    //TODO: sort_date (baseball, basketball, hockey only)
+
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create(executor: RequestExecutor, pathBuilder: PathBuilder) {
+        return new PlayersSubResource(LeagueDraftResultsResponseSchema, executor, pathBuilder);
+    }
+
+    position(position: string) {
+        this._position = position;
+        return this;
+    }
+
+    status(status: PlayerStatus): this {
+        this._status = status;
+        return this;
+    }
+
+    search(name: string): this {
+        this._search = name;
+        return this;
+    }
+
+    sort(sort: string): this {
+        this._sort = sort;
+        return this;
+    }
+
+    sortType(sortType: string): this {
+        this._sort_type = sortType;
+        return this;
+    }
+
+    sortSeason(sortSeason: string): this {
+        this._sort_season = sortSeason;
+        return this;
+    }
+
+    sortWeek(week: number): this {
+        this._sort_week = week.toString();
+        return this;
+    }
+
+    start(start: number): this {
+        this._start = start.toString();
+        return this;
+    }
+
+    count(count: number): this {
+        this._count = count.toString();
+        return this;
+    }
+}
+
 class TeamsSubResource extends ExecutableResource<LeagueTeamsResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
@@ -68,7 +142,7 @@ class TeamsSubResource extends ExecutableResource<LeagueTeamsResponse> {
     }
 }
 
-// TODO: figure out how to restrict functions
+// TODO: figure out how to restrict functions, for now just allow user to reach all functions
 class TransactionsSubResource extends ExecutableResource<LeagueTransactionsResponse> {
 
     private type: TransactionType | undefined = undefined;
@@ -124,7 +198,7 @@ class TransactionsSubResource extends ExecutableResource<LeagueTransactionsRespo
     }
 }
 
-class ScoreboardSubResource extends ExecutableResource<LeagueScoreboardResponse> implements PermitWeekAndGet<LeagueScoreboardResponse> {
+class ScoreboardSubResource extends ExecutableResource<LeagueScoreboardResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -138,11 +212,6 @@ class ScoreboardSubResource extends ExecutableResource<LeagueScoreboardResponse>
         this.pathBuilder.withParam('week', week.toString());
         return this;
     }
-}
-
-interface PermitWeekAndGet<T> {
-    week(week: number): ExecutableResource<T>;
-    get(): Promise<T>;
 }
 
 class SettingsSubResource extends ExecutableResource<LeagueSettingsResponse> {
