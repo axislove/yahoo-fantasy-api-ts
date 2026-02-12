@@ -1,6 +1,5 @@
 import { GameType } from '../enum/GameType';
 import { GameCode } from '../enum/GameCode';
-import { GamesResponseSchema } from '../schema/GameSchema';
 import { ExecutableResource } from '../ExecutableResource';
 
 /**
@@ -82,6 +81,6 @@ export class GamesCollectionBuilder<T> extends ExecutableResource<T> {
             filterParams.set('is_available', ['1']);
         }
 
-        return await this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), GamesResponseSchema);
+        return await this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), this.schema);
     }
 }

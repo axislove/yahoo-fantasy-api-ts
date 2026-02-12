@@ -25,12 +25,13 @@ export class RequestExecutor {
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const data = parsedJson.fantasy_content;
+
             return schema.parse(data) as T;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error(`Error making GET to endpoint: ${path}`);
             if (error instanceof ZodError) {
-                console.log(error);
+                console.log(error.issues);
                 throw new Error("ZodError occurred");
             }
             

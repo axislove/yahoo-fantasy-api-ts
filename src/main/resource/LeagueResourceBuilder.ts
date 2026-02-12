@@ -15,6 +15,7 @@ import { PlayerStatus } from '../enum/PlayerStatus';
 import { PlayerSort } from '../enum/PlayerSort';
 import { PlayerSortType } from '../enum/PlayerSortType';
 import { PlayerPosition } from '../enum/PlayerPosition';
+import { TeamsCollectionBuilder } from '../collection/TeamsCollectionBuilder';
 
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
@@ -34,8 +35,10 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
         return PlayersSubResource.create(this.executor, this.pathBuilder.withResource('players'));
     }
 
-    teams(): ExecutableResource<LeagueTeamsResponse> {
-        return TeamsSubResource.create(this.executor, this.pathBuilder.withResource('teams'));
+    teams(): TeamsCollectionBuilder<LeagueTeamsResponse> {
+        return new TeamsCollectionBuilder<LeagueTeamsResponse>(
+            LeagueTeamsResponseSchema, this.executor, this.pathBuilder.withResource('teams')
+        );
     }
 
     transactions(): TransactionsSubResource {
@@ -173,17 +176,6 @@ class PlayersSubResource extends ExecutableResource<LeaguePlayersResponse> {
         }
 
         return this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), LeaguePlayersResponseSchema);
-    }
-}
-
-class TeamsSubResource extends ExecutableResource<LeagueTeamsResponse> {
-
-    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
-        super(schema, executor, pathBuilder);
-    }
-
-    static create(executor: RequestExecutor, pathBuilder: PathBuilder): ExecutableResource<LeagueTeamsResponse> {
-        return new TeamsSubResource(LeagueTeamsResponseSchema, executor, pathBuilder);
     }
 }
 
