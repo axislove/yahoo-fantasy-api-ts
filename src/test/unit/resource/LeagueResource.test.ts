@@ -11,6 +11,11 @@ import { LeagueTransactionsResponse } from '../../../main/schema/TransactionsSch
 import { LeagueResponse } from '../../../main/schema/LeagueSchema';
 import { LeagueTeamsResponse } from '../../../main/schema/LeagueTeamsSchema';
 import { TransactionType } from '../../../main/enum/TransactionType';
+import { LeaguePlayersResponse } from '../../../main/schema/LeaguePlayersSchema';
+import { PlayerStatus } from '../../../main/enum/PlayerStatus';
+import { PlayerSort } from '../../../main/enum/PlayerSort';
+import { PlayerSortType } from '../../../main/enum/PlayerSortType';
+import { PlayerPosition } from '../../../main/enum/PlayerPosition';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
@@ -310,6 +315,242 @@ test('league scoreboard, week filter', async () => {
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
     const response: LeagueScoreboardResponse = await yahooClient.league(leagueKey).scoreboard().week(10).get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient.league(leagueKey).players().get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    await expect(yahooClient.league(leagueKey).players().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, position filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;position=QB`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .position(PlayerPosition.QB)
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, status filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;status=A`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .status(PlayerStatus.AVAILABLE)
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, search filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;search=Mahomes`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .search('Mahomes')
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, sort filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;sort=AR`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .sort(PlayerSort.ACTUAL_RANK)
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, sort type filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;sort_type=season`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .sortType(PlayerSortType.SEASON)
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, pagination filters', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;start=25;count=25`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .start(25)
+        .count(25)
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, player keys filter', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;player_keys=461.p.6763,461.p.7200`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .playerKeys(['461.p.6763', '461.p.7200'])
+        .get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league players, multiple filters', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayersResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;position=QB;status=A;sort=AR;sort_type=season;start=0;count=25`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayersResponse = await yahooClient
+        .league(leagueKey)
+        .players()
+        .position(PlayerPosition.QB)
+        .status(PlayerStatus.AVAILABLE)
+        .sort(PlayerSort.ACTUAL_RANK)
+        .sortType(PlayerSortType.SEASON)
+        .start(0)
+        .count(25)
+        .get();
 
     expect(response).not.toBeNull();
 
