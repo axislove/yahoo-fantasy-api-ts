@@ -1,37 +1,36 @@
 {
   "name": "yahoo-fantasy-typescript",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Yahoo Fantasy API for Typescript",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "unitTest": "vitest run --config ./src/test/vitest.unit.config.ts",
-    "lint": "npx eslint ."
+    "lint": "npx eslint ./src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/axislove/yahoo-fantasy-typescript.git"
+    "url": "git+https://github.com/axislove/yahoo-fantasy-api-ts.git"
   },
   "author": "axislove",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/axislove/yahoo-fantasy-typescript/issues"
+    "url": "https://github.com/axislove/yahoo-fantasy-api-ts/issues"
   },
-  "homepage": "https://github.com/axislove/yahoo-fantasy-typescript#readme",
+  "homepage": "https://github.com/axislove/yahoo-fantasy-api-ts#readme",
   "devDependencies": {
     "@eslint/js": "^9.38.0",
-    "@types/xml2js": "^0.4.14",
-    "axios": "^1.12.2",
     "eslint": "^9.38.0",
     "ts-mockito": "^2.6.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
-    "vitest": "^3.2.4",
-    "xml2js": "^0.6.2"
+    "vitest": "^3.2.4"
   },
   "dependencies": {
-    "handlebars": "^4.7.8",
+    "@types/xml2js": "^0.4.14",
+    "axios": "^1.13.5",
     "test": "^3.3.0",
+    "xml2js": "^0.6.2",
     "zod": "^4.1.12"
   }
 }
