@@ -53,7 +53,7 @@ export class YahooFantasyClient {
         return TransactionResourceBuilder.create(this.executor);
     }
 
-    users() {
+    users(): UsersCollectionBuilder {
         return UsersCollectionBuilder.create(this.executor);
     }
 }
