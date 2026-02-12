@@ -23,6 +23,7 @@ export class RequestExecutor {
             const responseXml = response.data as string;
             const parsedJson = await parseStringPromise(responseXml, this.parserOptions) as string;
 
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const data = parsedJson.fantasy_content;
             return schema.parse(data) as T;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
