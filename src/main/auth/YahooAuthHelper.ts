@@ -50,8 +50,10 @@ export class YahooAuthHelper {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (response.status !== 200 || response.data.error) {
-            throw new Error(`Token request failed: ${response.data.error_description || response.statusText}`)
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
+            throw new Error(`Token request failed: ${response.data.error_description ?? response.statusText}`)
         }
 
         return TokenSchema.parse(response.data);
