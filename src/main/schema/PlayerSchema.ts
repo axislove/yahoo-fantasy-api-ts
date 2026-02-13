@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 export const PlayerBaseInfoSchema = z.strictObject({
     player_key: z.string(),
@@ -81,3 +82,8 @@ export const PlayerStatsSchema = z.strictObject({
     player_stats: StatsSchema,
     player_advanced_stats: StatsSchema
 });
+
+export const PlayerResponseSchema = YahooFantasyContentBaseSchema.extend({
+    player: PlayerSchema
+});
+export type PlayerResponse = z.infer<typeof PlayerResponseSchema>;

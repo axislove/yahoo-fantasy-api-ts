@@ -31,6 +31,7 @@ export class RequestExecutor {
         } catch (error: any) {
             console.error(`Error making GET to endpoint: ${path}`);
             if (error instanceof ZodError) {
+                console.log(error.issues);
                 throw new Error("ZodError occurred");
             }
             
