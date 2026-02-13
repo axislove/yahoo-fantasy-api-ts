@@ -57,7 +57,27 @@ export const PlayerSchema = z.strictObject({
     is_editable: z.string().optional(),
     player_points: z.strictObject({
         coverage_type: z.string(),
-        week: z.string(),
+        week: z.string().optional(),
+        season: z.string().optional(),
         total: z.string()
     }).optional()
+});
+
+const StatSchema = z.strictObject({
+    stat_id: z.string(),
+    value: z.string()
+});
+
+const StatsSchema = z.strictObject({
+    coverage_type: z.string(),
+    season: z.string(),
+    stats: z.strictObject({
+        stat: z.array(StatSchema)
+    })
+});
+
+export const PlayerStatsSchema = z.strictObject({
+    ...PlayerSchema.shape,
+    player_stats: StatsSchema,
+    player_advanced_stats: StatsSchema
 });

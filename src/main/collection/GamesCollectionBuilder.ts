@@ -4,9 +4,6 @@ import { ExecutableResource } from '../ExecutableResource';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#games-collection
- * 
- * Builder to return a collection of Games. A GamesCollection can have filters
- * added to a request to obtain a further subset, based on those filters.
  */
 export class GamesCollectionBuilder<T> extends ExecutableResource<T> {
 

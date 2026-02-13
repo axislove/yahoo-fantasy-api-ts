@@ -12,7 +12,7 @@ export class TransactionResourceBuilder extends ExecutableResource<TransactionRe
     private transactionKey: string | undefined = undefined;
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
-        super(TransactionResponseSchema, executor, pathBuilder);
+        super(schema, executor, pathBuilder);
     }
 
     static create(executor: RequestExecutor): PermitTransactionKey {

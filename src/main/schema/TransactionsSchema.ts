@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LeagueSchema } from './LeagueSchema';
+import { LeagueSchema } from './league/LeagueSchema';
 import { PlayerBaseInfoSchema } from './PlayerSchema';
 import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 

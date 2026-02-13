@@ -8,14 +8,15 @@ import { LeagueScoreboardResponse } from '../../../main/schema/ScoreboardSchema'
 import { LeagueDraftResultsResponse } from '../../../main/schema/DraftResultsSchema';
 import { LeagueSettingsResponse } from '../../../main/schema/SettingsSchema';
 import { LeagueTransactionsResponse } from '../../../main/schema/TransactionsSchema';
-import { LeagueResponse } from '../../../main/schema/LeagueSchema';
-import { LeagueTeamsResponse } from '../../../main/schema/LeagueTeamsSchema';
+import { LeagueResponse } from '../../../main/schema/league/LeagueSchema';
+import { LeagueTeamsResponse } from '../../../main/schema/league/LeagueTeamsSchema';
 import { TransactionType } from '../../../main/enum/TransactionType';
-import { LeaguePlayersResponse } from '../../../main/schema/LeaguePlayersSchema';
+import { LeaguePlayersResponse } from '../../../main/schema/league/LeaguePlayersSchema';
 import { PlayerStatus } from '../../../main/enum/PlayerStatus';
 import { PlayerSort } from '../../../main/enum/PlayerSort';
 import { PlayerSortType } from '../../../main/enum/PlayerSortType';
 import { PlayerPosition } from '../../../main/enum/PlayerPosition';
+import { LeaguePlayerResponse, LeaguePlayerStatsResponse } from '../../../main/schema/league/LeaguePlayerSchema';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
@@ -99,6 +100,82 @@ test('league draftresults, invalid schema', async () => {
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
     await expect(yahooClient.league(leagueKey).draftResults().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league player', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayerResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;player_keys=playerKey`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayerResponse = await yahooClient.league(leagueKey).player('playerKey').get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league player, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayerInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;player_keys=playerKey`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    await expect(yahooClient.league(leagueKey).player('playerKey').get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league player stats', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayerStatsResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;player_keys=playerKey/stats`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguePlayerStatsResponse = await yahooClient.league(leagueKey).player('playerKey').stats().get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league player stats, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeaguePlayerStatsInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/players;player_keys=playerKey/stats`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    await expect(yahooClient.league(leagueKey).player('playerKey').stats().get()).rejects.toThrowError('ZodError occurred');
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
