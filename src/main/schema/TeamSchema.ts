@@ -26,9 +26,10 @@ export const TeamSchema = z.strictObject({
     }),
     clinched_playoffs: z.string().optional(),
     league_scoring_type: z.string(),
+    draft_position: z.string().optional(),
     has_draft_grade: z.string(),
     draft_grade: z.string().optional(),
-    draft_recap_url: z.string(),
+    draft_recap_url: z.string().optional(),
     managers: z.strictObject({
         manager: z.union([ManagerSchema, z.array(ManagerSchema)])
     })

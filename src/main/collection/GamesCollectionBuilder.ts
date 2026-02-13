@@ -1,10 +1,6 @@
 import { GameType } from '../enum/GameType';
-import { PathBuilder } from '../PathBuilder';
-import { RequestExecutor } from '../RequestExecutor';
 import { GameCode } from '../enum/GameCode';
-import { GamesResponse, GamesResponseSchema } from '../schema/GameSchema';
 import { ExecutableResource } from '../ExecutableResource';
-import { ZodType } from 'zod';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#games-collection
@@ -12,7 +8,7 @@ import { ZodType } from 'zod';
  * Builder to return a collection of Games. A GamesCollection can have filters
  * added to a request to obtain a further subset, based on those filters.
  */
-export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
+export class GamesCollectionBuilder<T> extends ExecutableResource<T> {
 
     // filters
     private readonly game_keys: string[] = [];
@@ -20,14 +16,6 @@ export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
     private readonly game_types: string[] = [];
     private readonly _seasons: string[] = [];
     private _available = false;
-
-    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
-        super(schema, executor, pathBuilder);
-    }
-
-    static create(executor: RequestExecutor): GamesCollectionBuilder {
-        return new GamesCollectionBuilder(GamesResponseSchema, executor, new PathBuilder('/games'));
-    }
 
     withGameKey(gameKey: string) {
         this.game_keys.push(gameKey);
@@ -74,7 +62,7 @@ export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
         return this;
     }
 
-    async get(): Promise<GamesResponse> {
+    async get(): Promise<T> {
         const filterParams: Map<string, string[]> = new Map<string, string[]>();
 
         if (this.game_keys.length > 0) {
@@ -93,6 +81,6 @@ export class GamesCollectionBuilder extends ExecutableResource<GamesResponse> {
             filterParams.set('is_available', ['1']);
         }
 
-        return await this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), GamesResponseSchema);
+        return await this.executor.makeGetRequest(this.pathBuilder.withParams(filterParams).buildPath(), this.schema);
     }
 }
