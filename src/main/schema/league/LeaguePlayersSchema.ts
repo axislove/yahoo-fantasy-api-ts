@@ -1,7 +1,7 @@
 import z from "zod";
 import { LeagueSchema } from './LeagueSchema';
-import { PlayerSchema } from "./PlayerSchema";
-import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
+import { PlayerSchema } from "../PlayerSchema";
+import { YahooFantasyContentBaseSchema } from '../FantasyContentSchema';
 
 const PlayersSchema = z.object({
     count: z.string(),

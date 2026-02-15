@@ -1,5 +1,8 @@
 import { ExecutableResource } from '../ExecutableResource';
 
+/**
+ * https://developer.yahoo.com/fantasysports/guide/#teams-collection
+ */
 export class TeamsCollectionBuilder<T> extends ExecutableResource<T> {
 
     private readonly team_keys: string [] = [];

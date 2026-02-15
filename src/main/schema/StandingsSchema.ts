@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { TeamSchema } from './TeamSchema';
-import { LeagueSchema } from './LeagueSchema';
+import { LeagueSchema } from './league/LeagueSchema';
 import { YahooFantasyContentBaseSchema } from './FantasyContentSchema';
 
 const TeamPointsSchema = z.strictObject({

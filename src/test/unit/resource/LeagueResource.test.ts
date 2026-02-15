@@ -8,10 +8,10 @@ import { LeagueScoreboardResponse } from '../../../main/schema/ScoreboardSchema'
 import { LeagueDraftResultsResponse } from '../../../main/schema/DraftResultsSchema';
 import { LeagueSettingsResponse } from '../../../main/schema/SettingsSchema';
 import { LeagueTransactionsResponse } from '../../../main/schema/TransactionsSchema';
-import { LeagueResponse } from '../../../main/schema/LeagueSchema';
-import { LeagueTeamsResponse } from '../../../main/schema/LeagueTeamsSchema';
+import { LeagueResponse } from '../../../main/schema/league/LeagueSchema';
+import { LeagueTeamsResponse } from '../../../main/schema/league/LeagueTeamsSchema';
 import { TransactionType } from '../../../main/enum/TransactionType';
-import { LeaguePlayersResponse } from '../../../main/schema/LeaguePlayersSchema';
+import { LeaguePlayersResponse } from '../../../main/schema/league/LeaguePlayersSchema';
 import { PlayerStatus } from '../../../main/enum/PlayerStatus';
 import { PlayerSort } from '../../../main/enum/PlayerSort';
 import { PlayerSortType } from '../../../main/enum/PlayerSortType';
