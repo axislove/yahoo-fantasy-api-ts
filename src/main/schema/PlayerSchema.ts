@@ -101,7 +101,7 @@ const StatsSchema = z.strictObject({
     })
 });
 
-const PlayerStatsSchema = z.strictObject({
+export const PlayerStatsSchema = z.strictObject({
     ...PlayerSchema.shape,
     player_stats: StatsSchema,
     player_advanced_stats: StatsSchema

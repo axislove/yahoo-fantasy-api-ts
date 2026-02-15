@@ -1,5 +1,4 @@
 import { beforeEach, expect, test } from 'vitest';
-import { GameCode } from '../../../main/enum/GameCode';
 import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { instance, mock, verify, when } from 'ts-mockito';

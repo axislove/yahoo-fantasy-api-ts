@@ -16,7 +16,6 @@ import { PlayerStatus } from '../../../main/enum/PlayerStatus';
 import { PlayerSort } from '../../../main/enum/PlayerSort';
 import { PlayerSortType } from '../../../main/enum/PlayerSortType';
 import { PlayerPosition } from '../../../main/enum/PlayerPosition';
-import { LeaguePlayerResponse, LeaguePlayerStatsResponse } from '../../../main/schema/league/LeaguePlayerSchema';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
