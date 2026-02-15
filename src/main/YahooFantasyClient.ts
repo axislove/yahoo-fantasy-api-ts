@@ -48,7 +48,7 @@ export class YahooFantasyClient {
     }
 
     player(playerKey: string) {
-        return PlayerResourceBuilder.create<PlayerResponse>(PlayerResponseSchema, this.executor, playerKey);
+        return PlayerResourceBuilder.create(PlayerResponseSchema, this.executor, playerKey);
     }
 
     team(teamKey: string): TeamResourceBuilder {

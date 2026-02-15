@@ -2,26 +2,65 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { LeaguePlayerStatsResponse } from '../schema/league/LeaguePlayerSchema';
+import { PlayerDraftAnalysisResponse, PlayerDraftAnalysisResponseSchema, PlayerPercentOwnedReponseSchema, PlayerPercentOwnedResponse, PlayerResponse, PlayerStatsResponse, PlayerStatsResponseSchema } from '../schema/PlayerSchema';
 
-export class PlayerResourceBuilder<T> extends ExecutableResource<T> {
+export class PlayerResourceBuilder extends ExecutableResource<PlayerResponse> {
 
-    private readonly playerKey: string;
-
-    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder, playerKey: string) {
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
-        this.playerKey = playerKey;
     }
 
-    static create<U>(schema: ZodType, executor: RequestExecutor, playerKey: string): PlayerResourceBuilder<U> {
-        return new PlayerResourceBuilder(schema, executor, new PathBuilder('/player').withResource(playerKey), playerKey);
+    static create(schema: ZodType, executor: RequestExecutor, playerKey: string): PlayerResourceBuilder {
+        return new PlayerResourceBuilder(schema, executor, new PathBuilder('/player').withResource(playerKey));
     }
 
-    stats(): LeaguePlayerStatsSubResource {
-        return new LeaguePlayerStatsSubResource(
-            this.schema, this.executor, this.pathBuilder.withResource('stats')
+    draftAnalysis(): ExecutableResource<PlayerDraftAnalysisResponse> {
+        return PlayerDraftAnalysisSubResource.create(
+            PlayerDraftAnalysisResponseSchema, this.executor, this.pathBuilder.withResource('draft_analysis')
+        );
+    }
+
+    percentOwned(): ExecutableResource<PlayerPercentOwnedResponse> {
+        return PlayerPercentOwnedSubResource.create(
+            PlayerPercentOwnedReponseSchema, this.executor, this.pathBuilder.withResource('percent_owned')
+        );
+    }
+
+    stats(): ExecutableResource<PlayerStatsResponse> {
+        return PlayerStatsSubResource.create(
+            PlayerStatsResponseSchema, this.executor, this.pathBuilder.withResource('stats')
         );
     }
 }
 
-class LeaguePlayerStatsSubResource extends ExecutableResource<LeaguePlayerStatsResponse> {}
+class PlayerDraftAnalysisSubResource extends ExecutableResource<PlayerDraftAnalysisResponse> {
+
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder): ExecutableResource<PlayerDraftAnalysisResponse> {
+        return new PlayerDraftAnalysisSubResource(schema, executor, pathBuilder);
+    }
+}
+
+class PlayerPercentOwnedSubResource extends ExecutableResource<PlayerPercentOwnedResponse> {
+
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder): ExecutableResource<PlayerPercentOwnedResponse> {
+        return new PlayerPercentOwnedSubResource(schema, executor, pathBuilder);
+    }
+}
+
+class PlayerStatsSubResource extends ExecutableResource<PlayerStatsResponse> {
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder): ExecutableResource<PlayerStatsResponse> {
+        return new PlayerStatsSubResource(schema, executor, pathBuilder);
+    }
+}

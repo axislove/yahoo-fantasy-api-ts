@@ -16,8 +16,6 @@ import { PlayerSort } from '../enum/PlayerSort';
 import { PlayerSortType } from '../enum/PlayerSortType';
 import { PlayerPosition } from '../enum/PlayerPosition';
 import { TeamsCollectionBuilder } from '../collection/TeamsCollectionBuilder';
-import { PlayerResourceBuilder } from './PlayerResourceBuilder';
-import { LeaguePlayerResponseSchema } from '../schema/league/LeaguePlayerSchema';
 
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
@@ -31,14 +29,6 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 
     draftResults(): ExecutableResource<LeagueDraftResultsResponse> {
         return DraftResultsSubResource.create(this.executor, this.pathBuilder.withResource('draftresults'));
-    }
-
-    player(playerKey: string): PlayerResourceBuilder {
-        return new PlayerResourceBuilder(
-            LeaguePlayerResponseSchema, 
-            this.executor, 
-            this.pathBuilder.withResource('players').withParam('player_keys', playerKey)
-        );
     }
 
     players(): PlayersSubResource {

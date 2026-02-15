@@ -64,6 +64,30 @@ export const PlayerSchema = z.strictObject({
     }).optional()
 });
 
+const PlayerDraftAnalysisSchema = z.strictObject({
+    ...PlayerSchema.shape,
+    draft_analysis: z.object({
+        average_pick: z.string(),
+        average_round: z.string(),
+        average_cost: z.string(),
+        percent_drafted: z.string(),
+        preseason_average_pick: z.string(),
+        preseason_average_round: z.string(),
+        preseason_average_cost: z.string(),
+        preseason_percent_drafted: z.string()
+    })
+});
+
+const PlayerPercentOwned = z.strictObject({
+    ...PlayerSchema.shape,
+    percent_owned: z.object({
+        coverage_type: z.string(),
+        week: z.string(),
+        value: z.string(),
+        delta: z.string()
+    })
+});
+
 const StatSchema = z.strictObject({
     stat_id: z.string(),
     value: z.string()
@@ -77,7 +101,7 @@ const StatsSchema = z.strictObject({
     })
 });
 
-export const PlayerStatsSchema = z.strictObject({
+const PlayerStatsSchema = z.strictObject({
     ...PlayerSchema.shape,
     player_stats: StatsSchema,
     player_advanced_stats: StatsSchema
@@ -87,3 +111,18 @@ export const PlayerResponseSchema = YahooFantasyContentBaseSchema.extend({
     player: PlayerSchema
 });
 export type PlayerResponse = z.infer<typeof PlayerResponseSchema>;
+
+export const PlayerDraftAnalysisResponseSchema = YahooFantasyContentBaseSchema.extend({
+    player: PlayerDraftAnalysisSchema
+});
+export type PlayerDraftAnalysisResponse = z.infer<typeof PlayerDraftAnalysisResponseSchema>;
+
+export const PlayerPercentOwnedReponseSchema = YahooFantasyContentBaseSchema.extend({
+    player: PlayerPercentOwned
+});
+export type PlayerPercentOwnedResponse = z.infer<typeof PlayerPercentOwnedReponseSchema>;
+
+export const PlayerStatsResponseSchema = YahooFantasyContentBaseSchema.extend({
+    player: PlayerStatsSchema
+});
+export type PlayerStatsResponse = z.infer<typeof PlayerStatsResponseSchema>;

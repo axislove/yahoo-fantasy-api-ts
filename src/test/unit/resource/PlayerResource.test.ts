@@ -4,7 +4,7 @@ import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { instance, mock, verify, when } from 'ts-mockito';
 import { getMockResponse } from '../TestUtils';
-import { PlayerResponse } from '../../../main/schema/PlayerSchema';
+import { PlayerDraftAnalysisResponse, PlayerPercentOwnedResponse, PlayerResponse, PlayerStatsResponse } from '../../../main/schema/PlayerSchema';
 
 let yahooClient: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance;
@@ -27,7 +27,7 @@ test('player', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const endpoint = `/player/${playerKey}`
+    const endpoint = `/player/${playerKey}`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
     const response: PlayerResponse = await yahooClient.player(playerKey).get();
@@ -47,9 +47,120 @@ test('player, invalid schema', async () => {
         config: {} as InternalAxiosRequestConfig
     }
 
-    const endpoint = `/player/${playerKey}`
+    const endpoint = `/player/${playerKey}`;
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
     await expect(yahooClient.player(playerKey).get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player draft analysis', async () => {
+    const xmlContent = await getMockResponse('PlayerDraftAnalysisResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/draft_analysis`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: PlayerDraftAnalysisResponse = await yahooClient.player(playerKey).draftAnalysis().get();
+    
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player draft analysis, invalid schema', async () => {
+    const xmlContent = await getMockResponse('PlayerDraftAnalysisInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/draft_analysis`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+    await expect(yahooClient.player(playerKey).draftAnalysis().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player percent owned', async () => {
+    const xmlContent = await getMockResponse('PlayerPercentOwnedResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/percent_owned`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: PlayerPercentOwnedResponse = await yahooClient.player(playerKey).percentOwned().get();
+    
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player percent owned, invalid schema', async () => {
+    const xmlContent = await getMockResponse('PlayerPercentOwnedInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/percent_owned`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+    await expect(yahooClient.player(playerKey).percentOwned().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player stats', async () => {
+    const xmlContent = await getMockResponse('PlayerStatsResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/stats`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: PlayerStatsResponse = await yahooClient.player(playerKey).stats().get();
+    
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('player stats, invalid schema', async () => {
+    const xmlContent = await getMockResponse('PlayerStatsInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/player/${playerKey}/stats`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+    await expect(yahooClient.player(playerKey).stats().get()).rejects.toThrowError('ZodError occurred');
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
