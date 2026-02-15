@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
-import { GameResourceBuilder, PermitGameKey } from './resource/GameResourceBuilder';
+import { GameResourceBuilder } from './resource/GameResourceBuilder';
 import { RequestExecutor } from './RequestExecutor';
 import { GamesCollectionBuilder } from './collection/GamesCollectionBuilder';
 import { TeamResourceBuilder } from './resource/TeamResourceBuilder';
-import { PermitTransactionKey, TransactionResourceBuilder } from './resource/TransactionResourceBuilder';
+import { TransactionResourceBuilder } from './resource/TransactionResourceBuilder';
 import { LeagueResourceBuilder } from './resource/LeagueResourceBuilder';
 import { UsersCollectionBuilder } from './collection/UsersCollectionBuilder';
 import { GamesResponse, GamesResponseSchema } from './schema/GameSchema';
@@ -12,6 +12,9 @@ import { PlayerResourceBuilder } from './resource/PlayerResourceBuilder';
 import { PlayerResponseSchema } from './schema/PlayerSchema';
 import { LeaguesCollectionBuilder } from './collection/LeaguesCollectionBuilder';
 import { LeaguesResponseSchema } from './schema/league/LeaguesSchema';
+import { GameCode } from './enum/GameCode';
+import { ExecutableResource } from './ExecutableResource';
+import { TransactionResponse } from './schema/TransactionSchema';
 
 export class YahooFantasyClient {
     private static readonly BASE_URL: string = "https://fantasysports.yahooapis.com/fantasy/v2/";
@@ -35,12 +38,12 @@ export class YahooFantasyClient {
         }
     }
 
-    game(): PermitGameKey {
-        return GameResourceBuilder.create(this.executor);
+    game(gameKey: GameCode | string): GameResourceBuilder {
+        return GameResourceBuilder.create(gameKey, this.executor);
     }
 
     games(): GamesCollectionBuilder<GamesResponse> {
-        return new GamesCollectionBuilder<GamesResponse>(
+        return GamesCollectionBuilder.create<GamesResponse>(
             GamesResponseSchema, this.executor, new PathBuilder('/games')
         );
     }
@@ -54,15 +57,15 @@ export class YahooFantasyClient {
     }
 
     player(playerKey: string): PlayerResourceBuilder {
-        return PlayerResourceBuilder.create(PlayerResponseSchema, this.executor, playerKey);
+        return PlayerResourceBuilder.create(playerKey, PlayerResponseSchema, this.executor);
     }
 
     team(teamKey: string): TeamResourceBuilder {
         return TeamResourceBuilder.create(teamKey, this.executor);
     }
 
-    transaction(): PermitTransactionKey {
-        return TransactionResourceBuilder.create(this.executor);
+    transaction(transactionKey: string): ExecutableResource<TransactionResponse> {
+        return TransactionResourceBuilder.create(transactionKey, this.executor);
     }
 
     users(): UsersCollectionBuilder {

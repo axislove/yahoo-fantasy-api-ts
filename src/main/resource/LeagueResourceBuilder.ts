@@ -22,7 +22,7 @@ import { StandingsSubResource } from '../subresources/StandingsSubResource';
 import { TransactionsSubResource } from '../subresources/TransactionsSubResource';
 
 /**
- * https://developer.yahoo.com/fantasysports/guide/#league-resource
+ * https://developer.yahoo.com/fantasysports/guide/#league-resource 
  */
 export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
 

@@ -5,6 +5,9 @@ import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from '../schema/Team
 import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from '../schema/TeamSchema';
 import { ExecutableResource } from '../ExecutableResource';
 
+/**
+ * https://developer.yahoo.com/fantasysports/guide/#team-resource
+ */
 export class TeamResourceBuilder extends ExecutableResource<TeamResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
@@ -30,7 +33,7 @@ export class TeamResourceBuilder extends ExecutableResource<TeamResponse> {
 
 class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
 
-    private _weeks: string[] = [];
+    private readonly _weeks: string[] = [];
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
@@ -48,8 +51,6 @@ class MatchupsSubResource extends ExecutableResource<TeamMatchupsResponse> {
         });
 
         this._weeks.push(...weeksAsStrings);
-
-
         return this;
     }
 

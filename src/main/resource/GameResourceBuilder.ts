@@ -15,34 +15,13 @@ import { ZodType } from 'zod';
  * 
  * More information available on Yahoo's documentation
  */
-export class GameResourceBuilder extends ExecutableResource<GameResponse> implements PermitGameKey {
-
-    private gameKey: GameCode | string = "";
+export class GameResourceBuilder extends ExecutableResource<GameResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
 
-    static create(executor: RequestExecutor): PermitGameKey {
-        return new GameResourceBuilder(GameResponseSchema, executor, new PathBuilder('/game'));
+    static create(gameKey: GameCode | string, executor: RequestExecutor): ExecutableResource<GameResponse> {
+        return new GameResourceBuilder(GameResponseSchema, executor, new PathBuilder('/game').withResource(gameKey));
     }
-
-    withGameCode(gameCode: GameCode): ExecutableResource<GameResponse> {
-        this.gameKey = gameCode;
-        return this;
-    }
-
-    withGameId(gameId: string): ExecutableResource<GameResponse> {
-        this.gameKey = gameId;
-        return this;
-    }
-
-    async get(): Promise<GameResponse> {
-        return await this.executor.makeGetRequest(this.pathBuilder.withResource(this.gameKey).buildPath(), this.schema);
-    }
-}
-
-export interface PermitGameKey {
-    withGameCode(gameCode: GameCode): ExecutableResource<GameResponse>;
-    withGameId(gameId: string): ExecutableResource<GameResponse>;
 }

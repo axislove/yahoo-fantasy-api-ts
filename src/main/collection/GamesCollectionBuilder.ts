@@ -1,6 +1,9 @@
 import { GameType } from '../enum/GameType';
 import { GameCode } from '../enum/GameCode';
 import { ExecutableResource } from '../ExecutableResource';
+import { ZodType } from 'zod';
+import { RequestExecutor } from '../RequestExecutor';
+import { PathBuilder } from '../PathBuilder';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#games-collection
@@ -13,6 +16,14 @@ export class GamesCollectionBuilder<T> extends ExecutableResource<T> {
     private readonly game_types: string[] = [];
     private readonly _seasons: string[] = [];
     private _available = false;
+
+    private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
+        super(schema, executor, pathBuilder);
+    }
+
+    static create<U>(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder): GamesCollectionBuilder<U> {
+        return new GamesCollectionBuilder(schema, executor, pathBuilder);
+    }
 
     withGameKey(gameKey: string) {
         this.game_keys.push(gameKey);

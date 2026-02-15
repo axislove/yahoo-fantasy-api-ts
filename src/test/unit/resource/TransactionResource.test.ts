@@ -28,7 +28,7 @@ test('transaction, invalid schema', async () => {
 
     const endpoint = `/transaction/${transactionKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-    await expect(yahooClient.transaction().withKey(transactionKey).get()).rejects.toThrowError('ZodError occurred');
+    await expect(yahooClient.transaction(transactionKey).get()).rejects.toThrowError('ZodError occurred');
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
@@ -46,7 +46,7 @@ test('transaction', async () => {
     const endpoint = `/transaction/${transactionKey}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: TransactionResponse = await yahooClient.transaction().withKey(transactionKey).get();
+    const response: TransactionResponse = await yahooClient.transaction(transactionKey).get();
 
     expect(response).not.toBeNull();
 
