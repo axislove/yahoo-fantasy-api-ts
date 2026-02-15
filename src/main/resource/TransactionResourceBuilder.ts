@@ -7,33 +7,15 @@ import { TransactionResponse, TransactionResponseSchema } from '../schema/Transa
 /**
  * https://developer.yahoo.com/fantasysports/guide/#transaction-resource
  */
-export class TransactionResourceBuilder extends ExecutableResource<TransactionResponse> implements PermitTransactionKey {
-
-    private transactionKey: string | undefined = undefined;
+export class TransactionResourceBuilder extends ExecutableResource<TransactionResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
 
-    static create(executor: RequestExecutor): PermitTransactionKey {
-        return new TransactionResourceBuilder(TransactionResponseSchema, executor, new PathBuilder('/transaction'));
+    static create(transactionKey: string, executor: RequestExecutor): ExecutableResource<TransactionResponse> {
+        return new TransactionResourceBuilder(
+            TransactionResponseSchema, executor, new PathBuilder('/transaction').withResource(transactionKey)
+        );
     }
-
-    withKey(transactionKey: string): ExecutableResource<TransactionResponse> {
-        this.transactionKey = transactionKey;
-        return this;
-    }
-
-    async get(): Promise<TransactionResponse> {
-        let pb = this.pathBuilder;
-        if (this.transactionKey) {
-            pb = pb.withResource(this.transactionKey);
-        }
-    
-        return await this.executor.makeGetRequest(pb.buildPath(), this.schema);
-    }
-}
-
-export interface PermitTransactionKey {
-    withKey(transactionKey: string): ExecutableResource<TransactionResponse>;
 }

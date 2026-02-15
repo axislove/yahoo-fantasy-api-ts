@@ -4,13 +4,16 @@ import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
 import { PlayerDraftAnalysisResponse, PlayerDraftAnalysisResponseSchema, PlayerPercentOwnedReponseSchema, PlayerPercentOwnedResponse, PlayerResponse, PlayerStatsResponse, PlayerStatsResponseSchema } from '../schema/PlayerSchema';
 
+/**
+ * https://developer.yahoo.com/fantasysports/guide/#player-resource
+ */
 export class PlayerResourceBuilder extends ExecutableResource<PlayerResponse> {
 
     private constructor(schema: ZodType, executor: RequestExecutor, pathBuilder: PathBuilder) {
         super(schema, executor, pathBuilder);
     }
 
-    static create(schema: ZodType, executor: RequestExecutor, playerKey: string): PlayerResourceBuilder {
+    static create(playerKey: string, schema: ZodType, executor: RequestExecutor): PlayerResourceBuilder {
         return new PlayerResourceBuilder(schema, executor, new PathBuilder('/player').withResource(playerKey));
     }
 

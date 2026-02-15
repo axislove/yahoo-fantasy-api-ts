@@ -10,7 +10,7 @@ import { TeamsCollectionBuilder } from './TeamsCollectionBuilder';
  * https://developer.yahoo.com/fantasysports/guide/#user-resource
  * 
  * Yahoo recommends using Users collection instead of Users resource, and to provide
- * the use_login flag in the request. For this reason, Users resource is unimplemented
+ * the use_login flag in the request. For this reason, User resource is unimplemented
  * and clients should use this UsersCollectionBuilder to make related requests.
  */
 export class UsersCollectionBuilder extends ExecutableResource<UsersResponse> {
@@ -24,7 +24,7 @@ export class UsersCollectionBuilder extends ExecutableResource<UsersResponse> {
     }
 
     games(): GamesCollectionBuilder<UsersGamesResponse> {
-        return new GamesCollectionBuilder<UsersGamesResponse>(
+        return GamesCollectionBuilder.create<UsersGamesResponse>(
             UsersGamesResponseSchema, this.executor, this.pathBuilder.withResource('games')
         );
     }

@@ -29,7 +29,7 @@ test('game with game_code', async () => {
     const endpoint = `/game/${gameCode}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response = await yahooClient.game().withGameCode(gameCode).get();
+    const response: GameResponse = await yahooClient.game(gameCode).get();
     
     expect(response).not.toBeNull();
     expect(response.game.code).toEqual(gameCode);
@@ -50,7 +50,7 @@ test('game with game_code, invalid schema', async () => {
     const gameCode = GameCode.NFL;
     const endpoint = `/game/${gameCode}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-    await expect(yahooClient.game().withGameCode(gameCode).get()).rejects.toThrowError('ZodError occurred');
+    await expect(yahooClient.game(gameCode).get()).rejects.toThrowError('ZodError occurred');
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
@@ -69,7 +69,7 @@ test('game with game_id', async () => {
     const endpoint = `/game/${gameId}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
-    const response: GameResponse = await yahooClient.game().withGameId(gameId).get();
+    const response: GameResponse = await yahooClient.game(gameId).get();
     
     expect(response).not.toBeNull();
     expect(response.game.game_id).toEqual(gameId);
@@ -90,7 +90,7 @@ test('game with game_id, invalid schema', async () => {
     const gameId = '461';
     const endpoint = `/game/${gameId}`
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-    await expect(yahooClient.game().withGameId(gameId).get()).rejects.toThrowError('ZodError occurred');
+    await expect(yahooClient.game(gameId).get()).rejects.toThrowError('ZodError occurred');
 
     verify(mockedAxiosClient.get(endpoint)).once();
 });
