@@ -5,3 +5,7 @@
 *.env.*
 
 output.json
+
+// local dev files
+replace-values.js
+todo.txt

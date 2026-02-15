@@ -101,7 +101,7 @@ export const SettingsSchema = z.strictObject({
   uses_negative_points: z.string(),
 });
 
-const LeagueSettingsSchema = z.strictObject({
+export const LeagueSettingsSchema = z.strictObject({
     ...LeagueSchema.shape,
     settings: SettingsSchema
 });

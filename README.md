@@ -1,6 +1,6 @@
 # Yahoo Fantasy API for TypeScript
 
-![Version](https://img.shields.io/badge/version-0.0.8-blue)
+![Version](https://img.shields.io/badge/version-0.0.9-blue)
 
 WARNING: This repo is a work in progress and not yet ready for public consumption. If interested, follow along for the 1.0.0 release of the public API.
 
@@ -54,6 +54,29 @@ const settings: LeagueSettingsResponse = client.league("000.l.000000").settings(
 
 // standings
 const standings: LeagueStandingsResponse = client.league("000.l.000000").standings().get();
+
+/****** Leagues Collection ******/
+
+// leagues
+const leagues: LeaguesResponse = client.leagues('000.l.000000', '000.l.000001').get();
+
+// leagues draft results
+const leaguesDraftResults: LeaguesDraftResultsResponse = client.leagues('000.l.000000', '000.l.000001').draftResults().get();
+
+// leagues with scoreboards
+const leaguesScoreboards: LeaguesScoreboardResponse = client.leagues('000.l.000000', '000.l.000001').scoreboard().get();
+
+// leagues with settings
+const leaguesSettings: LeaguesSettingsResponse = client.leagues('000.l.000000', '000.l.000001').settings().get();
+
+// leagues with standings
+const leaguesStandings: LeaguesStandingsResponse = client.leagues('000.l.000000', '000.l.000001').standings().get();
+
+// leagues with teams
+const leaguesTeams: LeaguesTeamsResponse = client.leagues('000.l.000000', '000.l.000001').teams().get();
+
+// leagues with transactions
+const leaguesTransactions: LeaguesTransactions = client.leagues('000.l.000000', '000.l.000001').transactions().get();
 
 /****** Team Resource ******/
 

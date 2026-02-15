@@ -103,90 +103,6 @@ test('league draftresults, invalid schema', async () => {
     verify(mockedAxiosClient.get(endpoint)).once();
 });
 
-test('league teams', async () => {
-    const xmlContent = await getMockResponse('LeagueTeamsResponse.xml');
-    const successfulResponse: AxiosResponse = {
-        data: xmlContent,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {} as InternalAxiosRequestConfig
-    }
-
-    const endpoint = `/league/${leagueKey}/teams`
-    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-
-    const response: LeagueTeamsResponse = await yahooClient.league(leagueKey).teams().get();
-    
-    expect(response).not.toBeNull();
-
-    verify(mockedAxiosClient.get(endpoint)).once();
-});
-
-test('league teams, invalid schema', async () => {
-    const xmlContent = await getMockResponse('LeagueTeamsInvalidResponse.xml');
-    const successfulResponse: AxiosResponse = {
-        data: xmlContent,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {} as InternalAxiosRequestConfig
-    }
-
-    const endpoint = `/league/${leagueKey}/teams`;
-    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-
-    await expect(yahooClient.league(leagueKey).teams().get()).rejects.toThrowError('ZodError occurred');
-
-    verify(mockedAxiosClient.get(endpoint)).once();
-});
-
-test('league transactions', async () => {
-    const xmlContent = await getMockResponse('LeagueTransactionsResponse.xml');
-    const successfulResponse: AxiosResponse = {
-        data: xmlContent,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {} as InternalAxiosRequestConfig
-    }
-
-    const endpoint = `/league/${leagueKey}/transactions`
-    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-
-    const response: LeagueTransactionsResponse = await yahooClient.league(leagueKey).transactions().get();
-    
-    expect(response).not.toBeNull();
-
-    verify(mockedAxiosClient.get(endpoint)).once();
-});
-
-test('league transactions, multiple filters', async () => {
-    const xmlContent = await getMockResponse('LeagueTransactionsResponse.xml');
-    const successfulResponse: AxiosResponse = {
-        data: xmlContent,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {} as InternalAxiosRequestConfig
-    }
-
-    const endpoint = `/league/${leagueKey}/transactions;type=add;team_key=teamKey;count=3`;
-    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
-
-    const response: LeagueTransactionsResponse = await yahooClient
-        .league(leagueKey)
-        .transactions()
-        .withTeamKey('teamKey')
-        .withType(TransactionType.ADD)
-        .count(3)
-        .get();
-    
-    expect(response).not.toBeNull();
-
-    verify(mockedAxiosClient.get(endpoint)).once();
-});
-
 test('league settings', async () => {
     const xmlContent = await getMockResponse('LeagueSettingsResponse.xml');
     const successfulResponse: AxiosResponse = {
@@ -552,6 +468,90 @@ test('league players, multiple filters', async () => {
         .count(25)
         .get();
 
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league teams', async () => {
+    const xmlContent = await getMockResponse('LeagueTeamsResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/teams`
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeagueTeamsResponse = await yahooClient.league(leagueKey).teams().get();
+    
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league teams, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeagueTeamsInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/teams`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    await expect(yahooClient.league(leagueKey).teams().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league transactions', async () => {
+    const xmlContent = await getMockResponse('LeagueTransactionsResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/transactions`
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeagueTransactionsResponse = await yahooClient.league(leagueKey).transactions().get();
+    
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league transactions, multiple filters', async () => {
+    const xmlContent = await getMockResponse('LeagueTransactionsResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/transactions;types=add;team_key=teamKey;count=3`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeagueTransactionsResponse = await yahooClient
+        .league(leagueKey)
+        .transactions()
+        .withTeamKey('teamKey')
+        .withType(TransactionType.ADD)
+        .count(3)
+        .get();
+    
     expect(response).not.toBeNull();
 
     verify(mockedAxiosClient.get(endpoint)).once();
