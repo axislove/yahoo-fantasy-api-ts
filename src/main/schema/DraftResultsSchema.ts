@@ -14,7 +14,7 @@ const DraftResultsSchema = z.strictObject({
     draft_result: z.array(DraftResultSchema)
 });
 
-const LeagueDraftResultsSchema = z.strictObject({
+export const LeagueDraftResultsSchema = z.strictObject({
     ...LeagueSchema.shape,
     draft_results: DraftResultsSchema
 });

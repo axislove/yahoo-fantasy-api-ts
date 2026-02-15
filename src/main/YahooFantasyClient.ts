@@ -10,6 +10,8 @@ import { GamesResponse, GamesResponseSchema } from './schema/GameSchema';
 import { PathBuilder } from './PathBuilder';
 import { PlayerResourceBuilder } from './resource/PlayerResourceBuilder';
 import { PlayerResponseSchema } from './schema/PlayerSchema';
+import { LeaguesCollectionBuilder } from './collection/LeaguesCollectionBuilder';
+import { LeaguesResponseSchema } from './schema/league/LeaguesSchema';
 
 export class YahooFantasyClient {
     private static readonly BASE_URL: string = "https://fantasysports.yahooapis.com/fantasy/v2/";
@@ -45,6 +47,10 @@ export class YahooFantasyClient {
 
     league(leagueKey: string): LeagueResourceBuilder {
         return LeagueResourceBuilder.create(leagueKey, this.executor);
+    }
+
+    leagues(leagueKeys: string[]): LeaguesCollectionBuilder {
+        return LeaguesCollectionBuilder.create(leagueKeys, LeaguesResponseSchema, this.executor);
     }
 
     player(playerKey: string): PlayerResourceBuilder {

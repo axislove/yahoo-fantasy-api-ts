@@ -55,6 +55,29 @@ const settings: LeagueSettingsResponse = client.league("000.l.000000").settings(
 // standings
 const standings: LeagueStandingsResponse = client.league("000.l.000000").standings().get();
 
+/****** Leagues Collection ******/
+
+// leagues
+const leagues: LeaguesResponse = client.leagues('000.l.000000', '000.l.000001').get();
+
+// leagues draft results
+const leaguesDraftResults: LeaguesDraftResultsResponse = client.leagues('000.l.000000', '000.l.000001').draftResults().get();
+
+// leagues with scoreboards
+const leaguesTeams: LeaguesScoreboardResponse = client.leagues('000.l.000000', '000.l.000001').scoreboard().get();
+
+// leagues with settings
+const leaguesTeams: LeaguesScoreboardResponse = client.leagues('000.l.000000', '000.l.000001').settings().get();
+
+// leagues with standings
+const leaguesTeams: LeaguesScoreboardResponse = client.leagues('000.l.000000', '000.l.000001').standings().get();
+
+// leagues with teams
+const leaguesTeams: LeaguesTeamsResponse = client.leagues('000.l.000000', '000.l.000001').teams().get();
+
+// leagues with transactions
+const leaguesTeams: LeaguesTeamsResponse = client.leagues('000.l.000000', '000.l.000001').transactions().get();
+
 /****** Team Resource ******/
 
 // team

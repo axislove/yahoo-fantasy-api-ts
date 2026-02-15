@@ -39,7 +39,8 @@ const StandingsSchema = z.strictObject({
     })
 })
 
-const LeagueStandingsSchema = LeagueSchema.extend({
+export const LeagueStandingsSchema = z.strictObject({
+    ...LeagueSchema.shape,
     standings: StandingsSchema
 });
 

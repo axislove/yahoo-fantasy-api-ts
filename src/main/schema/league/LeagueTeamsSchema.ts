@@ -8,7 +8,7 @@ const TeamsSchema = z.strictObject({
     team: z.array(TeamSchema)
 });
 
-const LeagueTeamsSchema = z.strictObject({
+export const LeagueTeamsSchema = z.strictObject({
     ...LeagueSchema.shape,
     teams: TeamsSchema
 });

@@ -8,7 +8,7 @@ export const ScoreboardSchema = z.strictObject({
     matchups: MatchupsSchema
 });
 
-const LeagueScoreboardSchema = z.strictObject({
+export const LeagueScoreboardSchema = z.strictObject({
     ...LeagueSchema.shape,
     scoreboard: ScoreboardSchema
 });
