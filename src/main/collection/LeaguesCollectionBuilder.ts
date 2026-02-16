@@ -2,13 +2,24 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { LeaguesDraftResultsResponse, LeaguesDraftResultsSchema, LeaguesResponse, LeaguesScoreboardResponse, LeaguesScoreboardResponseSchema, LeaguesSettingsResponse, LeaguesSettingsResponseSchema, LeaguesStandingsResponse, LeaguesStandingsResponseSchema, LeaguesTeamsResponse, LeaguesTeamsResponseSchema, LeaguesTransactionsResponse, LeaguesTransactionsResponseSchema } from '../schema/league/LeaguesSchema';
+import { 
+    LeaguesDraftResultsResponse,
+    LeaguesDraftResultsSchema,
+    LeaguesResponse,
+    LeaguesScoreboardResponse,
+    LeaguesScoreboardResponseSchema,
+    LeaguesSettingsResponse,
+    LeaguesSettingsResponseSchema,
+    LeaguesStandingsResponse, LeaguesStandingsResponseSchema,
+    LeaguesTransactionsResponse,
+    LeaguesTransactionsResponseSchema 
+} from '../schema/league/LeaguesSchema';
 import { DraftResultsSubResource } from '../subresources/DraftResultsSubResource';
-import { TeamsCollectionBuilder } from './TeamsCollectionBuilder';
 import { ScoreboardSubResource } from '../subresources/ScoreboardSubResource';
 import { SettingsSubResource } from '../subresources/SettingsSubResource';
 import { StandingsSubResource } from '../subresources/StandingsSubResource';
 import { TransactionsSubResource } from '../subresources/TransactionsSubResource';
+import { LeaguesTeamsCollection } from './LeaguesTeamsCollection';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#leagues-collection
@@ -54,8 +65,8 @@ export class LeaguesCollectionBuilder extends ExecutableResource<LeaguesResponse
         );
     }
 
-    teams(): ExecutableResource<LeaguesTeamsResponse> {
-        return new TeamsCollectionBuilder(LeaguesTeamsResponseSchema, this.executor, this.pathBuilder.withResource('teams'));
+    teams(): LeaguesTeamsCollection {
+        return LeaguesTeamsCollection.create(this.executor, this.pathBuilder);
     }
 
     transactions(): TransactionsSubResource<LeaguesTransactionsResponse> {

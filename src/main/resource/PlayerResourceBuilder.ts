@@ -2,7 +2,15 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { PlayerDraftAnalysisResponse, PlayerDraftAnalysisResponseSchema, PlayerPercentOwnedReponseSchema, PlayerPercentOwnedResponse, PlayerResponse, PlayerStatsResponse, PlayerStatsResponseSchema } from '../schema/PlayerSchema';
+import {
+    PlayerDraftAnalysisResponse,
+    PlayerDraftAnalysisResponseSchema,
+    PlayerPercentOwnedReponseSchema,
+    PlayerPercentOwnedResponse,
+    PlayerResponse,
+    PlayerStatsResponse,
+    PlayerStatsResponseSchema
+} from '../schema/PlayerSchema';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#player-resource

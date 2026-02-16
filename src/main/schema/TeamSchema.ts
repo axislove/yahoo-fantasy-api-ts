@@ -74,10 +74,14 @@ export const TeamRosterSchema = z.strictObject({
         week: z.string(),
         is_prescoring: z.string(),
         is_editable: z.string(),
-        players: z.strictObject({
-            count: z.string(),
-            player: z.array(PlayerSchema)
-        })
+        // old leagues may not have players data, but field is returned as string
+        players: z.union([
+            z.object({
+                count: z.string(),
+                player: z.array(PlayerSchema)
+            }),
+            z.string()
+        ])
     })
 });
 

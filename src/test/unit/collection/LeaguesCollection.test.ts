@@ -3,7 +3,7 @@ import { instance, mock, verify, when } from 'ts-mockito';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { getMockResponse } from '../TestUtils';
-import { LeaguesDraftResultsResponse, LeaguesResponse, LeaguesScoreboardResponse, LeaguesSettingsResponse, LeaguesStandingsResponse, LeaguesTeamsResponse, LeaguesTransactionsResponse } from '../../../main/schema/league/LeaguesSchema';
+import { LeaguesDraftResultsResponse, LeaguesResponse, LeaguesScoreboardResponse, LeaguesSettingsResponse, LeaguesStandingsResponse, LeaguesTeamsResponse, LeaguesTeamsRosterResponse, LeaguesTransactionsResponse } from '../../../main/schema/league/LeaguesSchema';
 import { TransactionType } from '../../../main/enum/TransactionType';
 
 let client: YahooFantasyClient;
@@ -255,10 +255,68 @@ test('leagues teams results', async () => {
     }
 
     const endpoint = `/leagues;league_keys=${leagueKeys.join(',')}/teams`;
-    
+
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
 
     const response: LeaguesTeamsResponse = await client.leagues(leagueKeys).teams().get();
+
+    expect(response).not.toBeNull();
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('leagues teams roster, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeaguesTeamsRosterInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/leagues;league_keys=${leagueKeys.join(',')}/teams/roster`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+    await expect(client.leagues(leagueKeys).teams().roster().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('leagues teams roster', async () => {
+    const xmlContent = await getMockResponse('LeaguesTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/leagues;league_keys=${leagueKeys.join(',')}/teams/roster`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguesTeamsRosterResponse = await client.leagues(leagueKeys).teams().roster().get();
+
+    expect(response).not.toBeNull();
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('leagues teams roster, week filter', async () => {
+    const xmlContent = await getMockResponse('LeaguesTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/leagues;league_keys=${leagueKeys.join(',')}/teams/roster;week=5`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeaguesTeamsRosterResponse = await client.leagues(leagueKeys).teams().roster().week(5).get();
 
     expect(response).not.toBeNull();
     verify(mockedAxiosClient.get(endpoint)).once();

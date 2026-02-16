@@ -8,18 +8,17 @@ import { LeagueSettingsResponse, LeagueSettingsResponseSchema } from '../schema/
 import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from '../schema/StandingsSchema';
 import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from '../schema/ScoreboardSchema';
 import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from '../schema/DraftResultsSchema';
-import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from '../schema/league/LeagueTeamsSchema';
 import { LeaguePlayersResponse, LeaguePlayersResponseSchema } from '../schema/league/LeaguePlayersSchema';
 import { PlayerStatus } from '../enum/PlayerStatus';
 import { PlayerSort } from '../enum/PlayerSort';
 import { PlayerSortType } from '../enum/PlayerSortType';
 import { PlayerPosition } from '../enum/PlayerPosition';
-import { TeamsCollectionBuilder } from '../collection/TeamsCollectionBuilder';
 import { DraftResultsSubResource } from '../subresources/DraftResultsSubResource';
 import { ScoreboardSubResource } from '../subresources/ScoreboardSubResource';
 import { SettingsSubResource } from '../subresources/SettingsSubResource';
 import { StandingsSubResource } from '../subresources/StandingsSubResource';
 import { TransactionsSubResource } from '../subresources/TransactionsSubResource';
+import { LeagueTeamsCollection } from '../collection/LeagueTeamsCollection';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#league-resource 
@@ -62,10 +61,8 @@ export class LeagueResourceBuilder extends ExecutableResource<LeagueResponse> {
         );
     }
 
-    teams(): TeamsCollectionBuilder<LeagueTeamsResponse> {
-        return new TeamsCollectionBuilder<LeagueTeamsResponse>(
-            LeagueTeamsResponseSchema, this.executor, this.pathBuilder.withResource('teams')
-        );
+    teams(): LeagueTeamsCollection {
+        return LeagueTeamsCollection.create(this.executor, this.pathBuilder);
     }
 
     transactions(): TransactionsSubResource<LeagueTransactionsResponse> {

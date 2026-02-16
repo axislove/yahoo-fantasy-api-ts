@@ -2,9 +2,14 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { UsersGamesResponse, UsersGamesResponseSchema, UsersResponse, UsersResponseSchema, UsersTeamsResponse, UsersTeamsResponseSchema } from '../schema/UsersSchema';
+import { 
+    UsersGamesResponse,
+    UsersGamesResponseSchema,
+    UsersResponse,
+    UsersResponseSchema
+} from '../schema/UsersSchema';
 import { GamesCollectionBuilder } from './GamesCollectionBuilder';
-import { TeamsCollectionBuilder } from './TeamsCollectionBuilder';
+import { UsersTeamsCollection } from './UsersTeamsCollection';
 
 /**
  * https://developer.yahoo.com/fantasysports/guide/#user-resource
@@ -29,9 +34,7 @@ export class UsersCollectionBuilder extends ExecutableResource<UsersResponse> {
         );
     }
 
-    teams(): TeamsCollectionBuilder<UsersTeamsResponse> {
-        return new TeamsCollectionBuilder<UsersTeamsResponse>(
-            UsersTeamsResponseSchema, this.executor, this.pathBuilder.withResource('teams')
-        );
+    teams(): UsersTeamsCollection {
+        return UsersTeamsCollection.create(this.executor, this.pathBuilder);
     }
 }
