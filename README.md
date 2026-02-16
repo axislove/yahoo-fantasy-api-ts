@@ -38,16 +38,19 @@ const games: GamesResponse = client.games().withGameKey("461").get();
 const league: LeagueResponse = client.league("000.l.000000").get();
 
 // draft results
-const draftResults: LeagueDraftResultsResponse = client.league("000.l.000000").draftResults().get();
+const leagueDraftResults: LeagueDraftResultsResponse = client.league("000.l.000000").draftResults().get();
 
 // teams
 const teams: LeagueTeamsResponse = client.league("000.l.000000").teams().get();
 
+// teams roster
+const leagueTeamsRoster: LeagueTeamsRosterResponse = client.league("000.l.000000").teams().roster().get();
+
 // transactions
-const transactions: LeagueTransactionsResponse = client.league("000.l.000000").transactions().get();
+const leagueTransactions: LeagueTransactionsResponse = client.league("000.l.000000").transactions().get();
 
 // scoreboard
-const scoreboard: LeagueScoreboardResponse = client.league("000.l.000000").scoreboard().get();
+const leagueScoreboard: LeagueScoreboardResponse = client.league("000.l.000000").scoreboard().get();
 
 // settings
 const settings: LeagueSettingsResponse = client.league("000.l.000000").settings().get();
@@ -75,8 +78,22 @@ const leaguesStandings: LeaguesStandingsResponse = client.leagues('000.l.000000'
 // leagues with teams
 const leaguesTeams: LeaguesTeamsResponse = client.leagues('000.l.000000', '000.l.000001').teams().get();
 
+// leagues with teams roster
+const leaguesTeamsRoster: LeaguesTeamsRosterResponse = client.leagues('000.l.000000', '000.l.000001').teams().roster().get();
+
 // leagues with transactions
 const leaguesTransactions: LeaguesTransactions = client.leagues('000.l.000000', '000.l.000001').transactions().get();
+
+/****** Users Collection ******/
+
+// users games
+const usersGames: UsersGamesResponse = client.users().games().get();
+
+// users teams
+const usersTeams: UsersTeamsResponse = client.users().teams().get();
+
+// users teams roster
+const usersTeamsRoster: UsersTeamsRosterResponse = client.users().teams().roster().get();
 
 /****** Team Resource ******/
 
