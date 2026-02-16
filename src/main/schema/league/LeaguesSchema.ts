@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { LeagueResponseSchema, LeagueSchema } from './LeagueSchema';
 import { YahooFantasyContentBaseSchema } from '../FantasyContentSchema';
 import { LeagueDraftResultsSchema } from '../DraftResultsSchema';
-import { LeagueTeamsSchema } from './LeagueTeamsSchema';
+import { LeagueTeamsRosterSchema, LeagueTeamsSchema } from './LeagueTeamsSchema';
 import { LeagueScoreboardSchema } from '../ScoreboardSchema';
 import { LeagueSettingsSchema } from '../SettingsSchema';
 import { LeagueStandingsResponseSchema, LeagueStandingsSchema } from '../StandingsSchema';
@@ -25,14 +25,6 @@ export const LeaguesDraftResultsSchema = YahooFantasyContentBaseSchema.extend({
     })
 });
 export type LeaguesDraftResultsResponse = z.infer<typeof LeaguesDraftResultsSchema>;
-
-export const LeaguesTeamsResponseSchema = YahooFantasyContentBaseSchema.extend({
-    leagues: z.object({
-        count: z.string(),
-        league: z.array(LeagueTeamsSchema)
-    })
-});
-export type LeaguesTeamsResponse = z.infer<typeof LeaguesTeamsResponseSchema>;
 
 export const LeaguesScoreboardResponseSchema = YahooFantasyContentBaseSchema.extend({
     leagues: z.object({
@@ -57,6 +49,22 @@ export const LeaguesStandingsResponseSchema = YahooFantasyContentBaseSchema.exte
     })
 });
 export type LeaguesStandingsResponse = z.infer<typeof LeagueStandingsResponseSchema>;
+
+export const LeaguesTeamsResponseSchema = YahooFantasyContentBaseSchema.extend({
+    leagues: z.object({
+        count: z.string(),
+        league: z.array(LeagueTeamsSchema)
+    })
+});
+export type LeaguesTeamsResponse = z.infer<typeof LeaguesTeamsResponseSchema>;
+
+export const LeaguesTeamsRosterResponseSchema = YahooFantasyContentBaseSchema.extend({
+    leagues: z.object({
+        count: z.string(),
+        league: z.array(LeagueTeamsRosterSchema)
+    })
+});
+export type LeaguesTeamsRosterResponse = z.infer<typeof LeaguesTeamsRosterResponseSchema>;
 
 export const LeaguesTransactionsResponseSchema = YahooFantasyContentBaseSchema.extend({
     leagues: z.object({

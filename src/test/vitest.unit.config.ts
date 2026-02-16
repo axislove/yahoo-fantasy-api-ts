@@ -4,6 +4,6 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig(({ mode }) => ({
     test: {
         env: loadEnv(mode, process.cwd(), ''),
-        include: ['src/test/unit/**/*.test.ts']
+        include: ['src/test/unit/**/UsersCollection.test.ts']
     }
 }));

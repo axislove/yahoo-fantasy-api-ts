@@ -3,7 +3,7 @@ import { instance, mock, verify, when } from 'ts-mockito';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { YahooFantasyClient } from '../../../main/YahooFantasyClient';
 import { getMockResponse } from '../TestUtils';
-import { UsersGamesResponse, UsersTeamsResponse } from '../../../main/schema/UsersSchema';
+import { UsersGamesResponse, UsersTeamsResponse, UsersTeamsRosterResponse } from '../../../main/schema/UsersSchema';
 
 let client: YahooFantasyClient;
 let mockedAxiosClient: AxiosInstance
@@ -105,9 +105,69 @@ test('user teams, invalid schema', async () => {
     }
 
     const endpoint = `/users;use_login=1/teams`;
-    
+
     when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
     await expect(client.users().teams().get()).rejects.toThrowError('ZodError occurred');
 
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('users teams roster, invalid schema', async () => {
+    const xmlContent = await getMockResponse('UsersTeamsRosterInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/users;use_login=1/teams/roster`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+    await expect(client.users().teams().roster().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('users teams roster', async () => {
+    const xmlContent = await getMockResponse('UsersTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/users;use_login=1/teams/roster`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: UsersTeamsRosterResponse = await client.users().teams().roster().get();
+
+    expect(response).not.toBeNull();
+    expect(response.users.user).not.toBeNull();
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('users teams roster, week filter', async () => {
+    const xmlContent = await getMockResponse('UsersTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/users;use_login=1/teams/roster;week=5`;
+
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: UsersTeamsRosterResponse = await client.users().teams().roster().week(5).get();
+
+    expect(response).not.toBeNull();
+    expect(response.users.user).not.toBeNull();
     verify(mockedAxiosClient.get(endpoint)).once();
 });

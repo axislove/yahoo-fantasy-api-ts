@@ -12,8 +12,6 @@ import { ZodType } from 'zod';
  * a 'game_id' or 'game_code'. A 'game_id' is a unique ID that identifies a fantasy
  * season. A 'game_code' identifies a game and will return the current season of that
  * game when used as a 'game_key'.
- * 
- * More information available on Yahoo's documentation
  */
 export class GameResourceBuilder extends ExecutableResource<GameResponse> {
 
