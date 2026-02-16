@@ -9,7 +9,7 @@ import { LeagueDraftResultsResponse } from '../../../main/schema/DraftResultsSch
 import { LeagueSettingsResponse } from '../../../main/schema/SettingsSchema';
 import { LeagueTransactionsResponse } from '../../../main/schema/TransactionsSchema';
 import { LeagueResponse } from '../../../main/schema/league/LeagueSchema';
-import { LeagueTeamsResponse } from '../../../main/schema/league/LeagueTeamsSchema';
+import { LeagueTeamsResponse, LeagueTeamsRosterResponse } from '../../../main/schema/league/LeagueTeamsSchema';
 import { TransactionType } from '../../../main/enum/TransactionType';
 import { LeaguePlayersResponse } from '../../../main/schema/league/LeaguePlayersSchema';
 import { PlayerStatus } from '../../../main/enum/PlayerStatus';
@@ -551,7 +551,65 @@ test('league transactions, multiple filters', async () => {
         .withType(TransactionType.ADD)
         .count(3)
         .get();
-    
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league teams roster, invalid schema', async () => {
+    const xmlContent = await getMockResponse('LeagueTeamsRosterInvalidResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/teams/roster`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    await expect(yahooClient.league(leagueKey).teams().roster().get()).rejects.toThrowError('ZodError occurred');
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league teams roster', async () => {
+    const xmlContent = await getMockResponse('LeagueTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/teams/roster`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeagueTeamsRosterResponse = await yahooClient.league(leagueKey).teams().roster().get();
+
+    expect(response).not.toBeNull();
+
+    verify(mockedAxiosClient.get(endpoint)).once();
+});
+
+test('league teams roster, week filter', async () => {
+    const xmlContent = await getMockResponse('LeagueTeamsRosterResponse.xml');
+    const successfulResponse: AxiosResponse = {
+        data: xmlContent,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {} as InternalAxiosRequestConfig
+    }
+
+    const endpoint = `/league/${leagueKey}/teams/roster;week=5`;
+    when(mockedAxiosClient.get(endpoint)).thenResolve(successfulResponse);
+
+    const response: LeagueTeamsRosterResponse = await yahooClient.league(leagueKey).teams().roster().week(5).get();
+
     expect(response).not.toBeNull();
 
     verify(mockedAxiosClient.get(endpoint)).once();
