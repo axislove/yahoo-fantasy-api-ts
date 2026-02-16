@@ -1,5 +1,10 @@
 import { ZodType } from 'zod';
-import { LeaguesTeamsResponse, LeaguesTeamsResponseSchema, LeaguesTeamsRosterResponse, LeaguesTeamsRosterResponseSchema } from '../schema/league/LeaguesSchema';
+import { 
+    LeaguesTeamsResponse,
+    LeaguesTeamsResponseSchema,
+    LeaguesTeamsRosterResponse,
+    LeaguesTeamsRosterResponseSchema
+} from '../schema/league/LeaguesSchema';
 import { RequestExecutor } from '../RequestExecutor';
 import { PathBuilder } from '../PathBuilder';
 import { ExecutableResource } from '../ExecutableResource';

@@ -8,7 +8,6 @@ import { LeagueSettingsResponse, LeagueSettingsResponseSchema } from '../schema/
 import { LeagueStandingsResponse, LeagueStandingsResponseSchema } from '../schema/StandingsSchema';
 import { LeagueScoreboardResponse, LeagueScoreboardResponseSchema } from '../schema/ScoreboardSchema';
 import { LeagueDraftResultsResponse, LeagueDraftResultsResponseSchema } from '../schema/DraftResultsSchema';
-import { LeagueTeamsResponse, LeagueTeamsResponseSchema } from '../schema/league/LeagueTeamsSchema';
 import { LeaguePlayersResponse, LeaguePlayersResponseSchema } from '../schema/league/LeaguePlayersSchema';
 import { PlayerStatus } from '../enum/PlayerStatus';
 import { PlayerSort } from '../enum/PlayerSort';

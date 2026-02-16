@@ -2,9 +2,19 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { LeaguesDraftResultsResponse, LeaguesDraftResultsSchema, LeaguesResponse, LeaguesScoreboardResponse, LeaguesScoreboardResponseSchema, LeaguesSettingsResponse, LeaguesSettingsResponseSchema, LeaguesStandingsResponse, LeaguesStandingsResponseSchema, LeaguesTeamsResponse, LeaguesTeamsResponseSchema, LeaguesTransactionsResponse, LeaguesTransactionsResponseSchema } from '../schema/league/LeaguesSchema';
+import { 
+    LeaguesDraftResultsResponse,
+    LeaguesDraftResultsSchema,
+    LeaguesResponse,
+    LeaguesScoreboardResponse,
+    LeaguesScoreboardResponseSchema,
+    LeaguesSettingsResponse,
+    LeaguesSettingsResponseSchema,
+    LeaguesStandingsResponse, LeaguesStandingsResponseSchema,
+    LeaguesTransactionsResponse,
+    LeaguesTransactionsResponseSchema 
+} from '../schema/league/LeaguesSchema';
 import { DraftResultsSubResource } from '../subresources/DraftResultsSubResource';
-import { LeagueTeamsCollection } from './LeagueTeamsCollection';
 import { ScoreboardSubResource } from '../subresources/ScoreboardSubResource';
 import { SettingsSubResource } from '../subresources/SettingsSubResource';
 import { StandingsSubResource } from '../subresources/StandingsSubResource';

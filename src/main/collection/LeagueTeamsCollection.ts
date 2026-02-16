@@ -2,7 +2,12 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { LeagueTeamsResponse, LeagueTeamsResponseSchema, LeagueTeamsRosterResponse, LeagueTeamsRosterResponseSchema } from '../schema/league/LeagueTeamsSchema';
+import { 
+    LeagueTeamsResponse,
+    LeagueTeamsResponseSchema,
+    LeagueTeamsRosterResponse,
+    LeagueTeamsRosterResponseSchema
+} from '../schema/league/LeagueTeamsSchema';
 import { RosterSubResource } from '../subresources/RosterSubResource';
 
 /**

@@ -2,7 +2,14 @@ import { ZodType } from 'zod';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
 import { TeamMatchupsResponse, TeamMatchupsResponseSchema } from '../schema/TeamMatchupsSchema';
-import { TeamResponse, TeamResponseSchema, TeamRosterResponse, TeamRosterResponseSchema, TeamStatsResponse, TeamStatsResponseSchema } from '../schema/TeamSchema';
+import {
+    TeamResponse,
+    TeamResponseSchema,
+    TeamRosterResponse,
+    TeamRosterResponseSchema,
+    TeamStatsResponse,
+    TeamStatsResponseSchema
+} from '../schema/TeamSchema';
 import { ExecutableResource } from '../ExecutableResource';
 
 /**

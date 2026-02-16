@@ -2,7 +2,12 @@ import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
 import { PathBuilder } from '../PathBuilder';
 import { RequestExecutor } from '../RequestExecutor';
-import { UsersGamesResponse, UsersGamesResponseSchema, UsersResponse, UsersResponseSchema } from '../schema/UsersSchema';
+import { 
+    UsersGamesResponse,
+    UsersGamesResponseSchema,
+    UsersResponse,
+    UsersResponseSchema
+} from '../schema/UsersSchema';
 import { GamesCollectionBuilder } from './GamesCollectionBuilder';
 import { UsersTeamsCollection } from './UsersTeamsCollection';
 

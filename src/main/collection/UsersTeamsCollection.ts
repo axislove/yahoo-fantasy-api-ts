@@ -1,6 +1,11 @@
 import { ZodType } from 'zod';
 import { ExecutableResource } from '../ExecutableResource';
-import { UsersTeamsResponse, UsersTeamsResponseSchema, UsersTeamsRosterResponse, UsersTeamsRosterResponseSchema } from '../schema/UsersSchema';
+import { 
+    UsersTeamsResponse,
+    UsersTeamsResponseSchema,
+    UsersTeamsRosterResponse,
+    UsersTeamsRosterResponseSchema
+} from '../schema/UsersSchema';
 import { RequestExecutor } from '../RequestExecutor';
 import { PathBuilder } from '../PathBuilder';
 import { RosterSubResource } from '../subresources/RosterSubResource';
